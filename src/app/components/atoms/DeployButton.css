@@ -1,0 +1,25 @@
+.d-btn-h1-text {
+  text-align: center;
+  font-family: Roboto;
+  font-weight: bold;
+  letter-spacing: 0px;
+  color: #61568c;
+}
+
+.d-btn-h2-text {
+  text-align: center;
+  font-family: Roboto;
+  font-weight: normal;
+  letter-spacing: 0px;
+  color: #61568c;
+}
+
+.d-btn {
+  background-color: #f2ae72 !important;
+  border-color: transparent !important;
+  border-radius: 10px;
+  width: 40%;
+}
+.d-btn:hover {
+  background-color: #f28177 !important;
+}
