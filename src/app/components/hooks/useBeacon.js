@@ -1,8 +1,11 @@
 import { useCallback, useState } from "react";
-import { BeaconWallet } from "@taquito/beacon-wallet";
-import { NetworkType, PermissionScope } from "@airgap/beacon-sdk";
+import constate from "constate";
 
+import { BeaconWallet } from "@taquito/beacon-wallet";
+import { PermissionScope } from "@airgap/beacon-sdk";
 import { TezosToolkit } from "@taquito/taquito";
+
+import { DEFAULT_NETWORK } from "../../defaults";
 
 class LambdaViewSigner {
   async publicKeyHash() {
@@ -34,18 +37,18 @@ const options = {
     },
   },
 };
-const net = "https://delphinet-tezos.giganode.io";
-const Tezos = new TezosToolkit(net);
+
+const Tezos = new TezosToolkit(DEFAULT_NETWORK.rpcBaseURL);
 const wallet = new BeaconWallet(options);
 Tezos.setWalletProvider(wallet);
 Tezos.setSignerProvider(new LambdaViewSigner());
 
-export default function useBeacon() {
+export const [UseBeaconProvider, useBeacon] = constate(() => {
   const [pkh, setUserPkh] = useState();
 
-  const connect = useCallback(async () => {
+  const connect = useCallback(async (network) => {
     await wallet.requestPermissions({
-      network: { type: NetworkType.DELPHINET },
+      network: { type: network.id },
       scopes: [
         PermissionScope.OPERATION_REQUEST,
         PermissionScope.SIGN,
@@ -53,8 +56,11 @@ export default function useBeacon() {
       ],
     });
 
+    Tezos.setRpcProvider(network.rpcBaseURL);
     setUserPkh(await wallet.getPKH());
   }, []);
 
   return { connect, isConnected: !!pkh, Tezos, wallet, pkh };
-}
+});
+
+export default useBeacon;
