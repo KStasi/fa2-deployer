@@ -1,7 +1,8 @@
 import { useCallback, useState } from "react";
+import constate from "constate";
+
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import { NetworkType, PermissionScope } from "@airgap/beacon-sdk";
-
 import { TezosToolkit } from "@taquito/taquito";
 
 class LambdaViewSigner {
@@ -40,7 +41,7 @@ const wallet = new BeaconWallet(options);
 Tezos.setWalletProvider(wallet);
 Tezos.setSignerProvider(new LambdaViewSigner());
 
-export default function useBeacon() {
+export const [UseBeaconProvider, useBeacon] = constate(() => {
   const [pkh, setUserPkh] = useState();
 
   const connect = useCallback(async () => {
@@ -57,4 +58,6 @@ export default function useBeacon() {
   }, []);
 
   return { connect, isConnected: !!pkh, Tezos, wallet, pkh };
-}
+});
+
+export default useBeacon;
