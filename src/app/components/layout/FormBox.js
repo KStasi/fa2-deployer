@@ -11,6 +11,7 @@ import Col from "react-bootstrap/Col";
 import "./FormBox.css";
 import useBeacon from "../hooks/useBeacon";
 import fa2Json from "../assets/TokenFA2.json";
+import { DEFAULT_NETWORK } from "../../defaults";
 
 const FormBox = ({}) => {
   const { connect, pkh, Tezos } = useBeacon();
@@ -146,7 +147,7 @@ const FormBox = ({}) => {
           </Form.Row>
           {!pkh ? (
             <DeployButton
-              onClick={connect}
+              onClick={() => connect(DEFAULT_NETWORK)}
               text={
                 <>
                   <div className="d-btn-h1-text">Connect</div>

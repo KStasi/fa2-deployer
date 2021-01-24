@@ -47,6 +47,8 @@ export const [UseBeaconProvider, useBeacon] = constate(() => {
   const [pkh, setUserPkh] = useState();
 
   const connect = useCallback(async (network) => {
+    console.log("network");
+    console.log(network);
     await wallet.requestPermissions({
       network: { type: network.id },
       scopes: [
