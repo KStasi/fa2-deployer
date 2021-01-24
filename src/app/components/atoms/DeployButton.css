@@ -4,6 +4,7 @@
   font-weight: bold;
   letter-spacing: 0px;
   color: #61568c;
+  font-size: 1.1rem;
 }
 
 .d-btn-h2-text {
@@ -12,14 +13,16 @@
   font-weight: normal;
   letter-spacing: 0px;
   color: #61568c;
+  font-size: 0.7rem;
 }
 
-.d-btn {
-  background-color: #f2ae72 !important;
-  border-color: transparent !important;
+.d-btn.btn {
+  background-color: #f2ae72;
+  border-color: transparent;
   border-radius: 10px;
   width: 40%;
 }
-.d-btn:hover {
-  background-color: #f28177 !important;
+.d-btn.btn:hover {
+  background-color: #f28177;
+  border-color: transparent;
 }

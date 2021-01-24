@@ -1,0 +1,16 @@
+.input-text.form-control {
+  border-radius: 10px;
+  border-color: transparent;
+  text-align: left;
+  font: normal normal normal 0.9rem Roboto;
+  letter-spacing: 0px;
+  color: #61568c;
+  height: calc(1.7em + 1rem + 2px);
+}
+.input-text.form-control::placeholder {
+  color: #61568c;
+}
+
+textarea.input-text.form-control {
+  height: calc(4em + 2rem + 6px);
+}
