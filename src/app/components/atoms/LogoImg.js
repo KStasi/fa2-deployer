@@ -1,11 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 
 import "./LogoImg.css";
 import Image from "react-bootstrap/Image";
 
-const LogoImg = ({ children }) => {
-  const [show, toggleShow] = useState(true);
-
+const LogoImg = () => {
   return (
     <>
       <Image

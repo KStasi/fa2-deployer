@@ -1,11 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 
 import "./FormField.css";
 import Form from "react-bootstrap/Form";
 
 const FormTextarea = ({ placeholder }) => {
-  const [toggleShow] = useState(true);
-
   return (
     <>
       <Form.Control
