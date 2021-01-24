@@ -8,8 +8,19 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import "./FormBox.css";
+import useBeacon from "../hooks/useBeacon";
 
 const FormBox = ({}) => {
+  const { connect, pkh } = useBeacon();
+
+  const [tokenName, setTokenName] = useState("");
+  const [tokenSymbol, setTokenSymbol] = useState("");
+  const [tokenSupply, setTokenSupply] = useState("");
+  const [tokenDecimals, setTokenDecimals] = useState("");
+  const [tokenOwner, setTokenOwner] = useState("");
+  const [tokenLogo, setTokenLogo] = useState("");
+  const [tokenDescription, setTokenDescription] = useState("");
+
   return (
     <Row>
       <Col className="m-0 p-0"></Col>
@@ -24,34 +35,75 @@ const FormBox = ({}) => {
               <LogoImg></LogoImg>
             </Col>
             <Col>
-              <FormField placeholder="Name"></FormField>
-              <FormField placeholder="Symbol"></FormField>
+              <FormField
+                placeholder="Name"
+                onChange={(e) => setTokenName(e.target.value)}
+              ></FormField>
+              <FormField
+                placeholder="Symbol"
+                onChange={(e) => setTokenSymbol(e.target.value)}
+              ></FormField>
             </Col>
           </Form.Row>
           <Form.Row>
             <Col>
-              <FormField placeholder="Supply"></FormField>
+              <FormField
+                placeholder="Supply"
+                onChange={(e) => setTokenSupply(e.target.value)}
+              ></FormField>
             </Col>
             <Col>
-              <FormField placeholder="Decimals"></FormField>
+              <FormField
+                placeholder="Decimals"
+                onChange={(e) => setTokenDecimals(e.target.value)}
+              ></FormField>
             </Col>
           </Form.Row>
           <Form.Row>
             <Col>
-              <FormField placeholder="Owner"></FormField>
+              <FormField
+                placeholder="Owner"
+                onChange={(e) => setTokenOwner(e.target.value)}
+              ></FormField>
             </Col>
           </Form.Row>
           <Form.Row>
             <Col>
-              <FormField placeholder="Logo url"></FormField>
+              <FormField
+                placeholder="Logo url"
+                onChange={(e) => setTokenLogo(e.target.value)}
+              ></FormField>
             </Col>
           </Form.Row>
           <Form.Row>
             <Col>
-              <FormTextarea placeholder="Description"></FormTextarea>
+              <FormTextarea
+                placeholder="Description"
+                onChange={(e) => setTokenDescription(e.target.value)}
+              ></FormTextarea>
             </Col>
           </Form.Row>
-          <DeployButton></DeployButton>
+          {!pkh ? (
+            <DeployButton
+              onClick={connect}
+              text={
+                <>
+                  <div className="d-btn-h1-text">Connect</div>
+                  <div className="d-btn-h2-text">to Thanos</div>
+                </>
+              }
+            ></DeployButton>
+          ) : (
+            <DeployButton
+              onClick={() => {}}
+              text={
+                <>
+                  <div className="d-btn-h1-text">Deploy</div>
+                  <div className="d-btn-h2-text">with Thanos</div>
+                </>
+              }
+            ></DeployButton>
+          )}
         </Form>
       </Col>
       <Col className="m-0 p-0"></Col>

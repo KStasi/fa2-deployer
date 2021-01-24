@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import "./FormField.css";
 import Form from "react-bootstrap/Form";
 
-const FormField = ({ placeholder }) => {
+const FormField = ({ placeholder, onChange }) => {
   const [toggleShow] = useState(true);
 
   return (
@@ -14,6 +14,7 @@ const FormField = ({ placeholder }) => {
         type="text"
         placeholder={placeholder}
         className="input-text my-2"
+        onChange={onChange}
       />
     </>
   );
