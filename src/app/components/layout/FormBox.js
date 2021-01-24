@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
+import { MichelsonMap } from "@taquito/michelson-encoder";
 
 import DeployButton from "../atoms/DeployButton";
 import FormField from "../atoms/FormField";
@@ -9,9 +10,10 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import "./FormBox.css";
 import useBeacon from "../hooks/useBeacon";
+import fa2Json from "../assets/TokenFA2.json";
 
 const FormBox = ({}) => {
-  const { connect, pkh } = useBeacon();
+  const { connect, pkh, Tezos } = useBeacon();
 
   const [tokenName, setTokenName] = useState("");
   const [tokenSymbol, setTokenSymbol] = useState("");
@@ -20,6 +22,65 @@ const FormBox = ({}) => {
   const [tokenOwner, setTokenOwner] = useState("");
   const [tokenLogo, setTokenLogo] = useState("");
   const [tokenDescription, setTokenDescription] = useState("");
+  const [fetching, setFetching] = useState(false);
+
+  const handleClick = useCallback(async () => {
+    setFetching(true);
+    try {
+      const originationOp = await Tezos.wallet
+        .originate({
+          code: fa2Json,
+          storage: {
+            ledger: MichelsonMap.fromLiteral({
+              [tokenOwner]: { balance: tokenSupply, allowances: [] },
+            }),
+            operators: new MichelsonMap(),
+            token_metadata: MichelsonMap.fromLiteral({
+              0: {
+                token_id: 0,
+                symbol: tokenSymbol,
+                name: tokenName,
+                decimals: tokenDecimals,
+                description: tokenDescription,
+                extras: new MichelsonMap(),
+              },
+            }),
+            metadata: MichelsonMap.fromLiteral({
+              "": Buffer("tezos-storage:contents", "ascii").toString("hex"),
+              contents: Buffer(
+                JSON.stringify({
+                  token_id: 0,
+                  symbol: tokenSymbol,
+                  name: tokenName,
+                  decimals: tokenDecimals,
+                  description: tokenDescription,
+                  url: tokenLogo,
+                }),
+                "ascii"
+              ).toString("hex"),
+            }),
+            total_supply: tokenSupply,
+          },
+        })
+        .send();
+      const contract = await originationOp.contract();
+      console.log(contract.address);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setFetching(false);
+    }
+  }, [
+    setFetching,
+    Tezos.wallet,
+    tokenName,
+    tokenSymbol,
+    tokenSupply,
+    tokenDecimals,
+    tokenOwner,
+    tokenLogo,
+    tokenDescription,
+  ]);
 
   return (
     <Row>
@@ -95,7 +156,7 @@ const FormBox = ({}) => {
             ></DeployButton>
           ) : (
             <DeployButton
-              onClick={() => {}}
+              onClick={handleClick}
               text={
                 <>
                   <div className="d-btn-h1-text">Deploy</div>

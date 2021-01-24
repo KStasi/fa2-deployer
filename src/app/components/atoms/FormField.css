@@ -9,8 +9,10 @@
 }
 .input-text.form-control::placeholder {
   color: #61568c;
+  opacity: 0.7;
 }
 
 textarea.input-text.form-control {
   height: calc(4em + 2rem + 6px);
+  color: #61568c;
 }

@@ -6,24 +6,25 @@ import { TezosToolkit } from "@taquito/taquito";
 
 class LambdaViewSigner {
   async publicKeyHash() {
-    return "tz1fVQangAfb9J1hRRMP2bSB6LvASD6KpY8A";
+    const acc = await wallet.client.getActiveAccount();
+    if (!acc) throw new Error("Not connected");
+    return acc.address;
   }
-
   async publicKey() {
-    return "edpkvWbk81uh1DEvdWKR4g1bjyTGhdu1mDvznPUFE2zDwNsLXrEb9K";
+    const acc = await wallet.client.getActiveAccount();
+    if (!acc) throw new Error("Not connected");
+    return acc.publicKey;
   }
-
   async secretKey() {
     throw new Error("Secret key cannot be exposed");
   }
-
   async sign() {
     throw new Error("Cannot sign");
   }
 }
 
 const options = {
-  name: "FA1.2 interaction dApp",
+  name: "FA2 deployer",
   iconUrl: "https://tezostaquito.io/img/favicon.png",
   eventHandlers: {
     PERMISSION_REQUEST_SUCCESS: {
@@ -33,8 +34,8 @@ const options = {
     },
   },
 };
-
-const Tezos = new TezosToolkit("https://delphinet-tezos.giganode.io");
+const net = "https://delphinet-tezos.giganode.io";
+const Tezos = new TezosToolkit(net);
 const wallet = new BeaconWallet(options);
 Tezos.setWalletProvider(wallet);
 Tezos.setSignerProvider(new LambdaViewSigner());
