@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@airgap/beacon-sdk": "^1.2.0",
-    "@taquito/beacon-wallet": "^7.0.1-beta.0",
+    "@taquito/beacon-wallet": "^7.2.0-alpha.0",
     "@taquito/michelson-encoder": "^7.1.0-beta.0",
     "@taquito/taquito": "8.0.0-beta.2",
     "@testing-library/jest-dom": "^5.11.4",
