@@ -45,10 +45,9 @@ Tezos.setSignerProvider(new LambdaViewSigner());
 
 export const [UseBeaconProvider, useBeacon] = constate(() => {
   const [pkh, setUserPkh] = useState();
+  const [network, setNetwork] = useState();
 
   const connect = useCallback(async (network) => {
-    console.log("network");
-    console.log(network);
     await wallet.requestPermissions({
       network: { type: network.id },
       scopes: [
@@ -60,9 +59,10 @@ export const [UseBeaconProvider, useBeacon] = constate(() => {
 
     Tezos.setRpcProvider(network.rpcBaseURL);
     setUserPkh(await wallet.getPKH());
+    setNetwork(network);
   }, []);
 
-  return { connect, isConnected: !!pkh, Tezos, wallet, pkh };
+  return { connect, isConnected: !!pkh, Tezos, wallet, pkh, network };
 });
 
 export default useBeacon;

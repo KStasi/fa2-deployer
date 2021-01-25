@@ -11,10 +11,10 @@ import Col from "react-bootstrap/Col";
 import "./FormBox.css";
 import useBeacon from "../hooks/useBeacon";
 import fa2Json from "../assets/TokenFA2.json";
-import { DEFAULT_NETWORK } from "../../defaults";
+import { DEFAULT_NETWORK, NETWORKS } from "../../defaults";
 
 const FormBox = ({}) => {
-  const { connect, pkh, Tezos } = useBeacon();
+  const { connect, pkh, Tezos, network } = useBeacon();
 
   const [tokenName, setTokenName] = useState("");
   const [tokenSymbol, setTokenSymbol] = useState("");
@@ -22,6 +22,7 @@ const FormBox = ({}) => {
   const [tokenDecimals, setTokenDecimals] = useState("");
   const [tokenOwner, setTokenOwner] = useState("");
   const [tokenLogo, setTokenLogo] = useState("");
+  const [tokenHomepage, setHomepage] = useState("");
   const [tokenDescription, setTokenDescription] = useState("");
   const [fetching, setFetching] = useState(false);
 
@@ -55,7 +56,8 @@ const FormBox = ({}) => {
                   name: tokenName,
                   decimals: tokenDecimals,
                   description: tokenDescription,
-                  url: tokenLogo,
+                  homepage: tokenHomepage,
+                  logo: tokenLogo,
                 }),
                 "ascii"
               ).toString("hex"),
@@ -80,6 +82,7 @@ const FormBox = ({}) => {
     tokenDecimals,
     tokenOwner,
     tokenLogo,
+    tokenHomepage,
     tokenDescription,
   ]);
 
@@ -132,8 +135,16 @@ const FormBox = ({}) => {
           <Form.Row>
             <Col>
               <FormField
-                placeholder="Logo url"
+                placeholder="Icon"
                 onChange={(e) => setTokenLogo(e.target.value)}
+              ></FormField>
+            </Col>
+          </Form.Row>
+          <Form.Row>
+            <Col>
+              <FormField
+                placeholder="Homepage"
+                onChange={(e) => setHomepage(e.target.value)}
               ></FormField>
             </Col>
           </Form.Row>
@@ -151,7 +162,7 @@ const FormBox = ({}) => {
               text={
                 <>
                   <div className="d-btn-h1-text">Connect</div>
-                  <div className="d-btn-h2-text">to Thanos</div>
+                  <div className="d-btn-h2-text">to Wallet</div>
                 </>
               }
             ></DeployButton>
@@ -161,14 +172,48 @@ const FormBox = ({}) => {
               text={
                 <>
                   <div className="d-btn-h1-text">Deploy</div>
-                  <div className="d-btn-h2-text">with Thanos</div>
+                  <div className="d-btn-h2-text">with Wallet</div>
                 </>
               }
             ></DeployButton>
           )}
         </Form>
       </Col>
-      <Col className="m-0 p-0"></Col>
+      <Col className="m-0 p-0">
+        {!network ? (
+          <>{console.log(network)} </>
+        ) : (
+          <div>
+            <DeployButton
+              className="mt-5"
+              onClick={() => connect(NETWORKS[+(NETWORKS[0].id == network.id)])}
+              text={
+                <>
+                  <div className="d-btn-h1-text">{network.name}</div>
+                </>
+              }
+            ></DeployButton>
+          </div>
+        )}
+        {!pkh ? (
+          <></>
+        ) : (
+          <>
+            <div>
+              <DeployButton
+                onClick={() => {}}
+                text={
+                  <>
+                    <div className="d-btn-h1-text">
+                      {pkh.slice(0, 7) + "..."}
+                    </div>
+                  </>
+                }
+              ></DeployButton>
+            </div>
+          </>
+        )}
+      </Col>
     </Row>
   );
 };
