@@ -12,9 +12,10 @@ import "./FormBox.css";
 import useBeacon from "../hooks/useBeacon";
 import fa2Json from "../assets/TokenFA2.json";
 import { DEFAULT_NETWORK, NETWORKS } from "../../defaults";
+import { BigNumber } from "bignumber.js";
 
 const FormBox = ({}) => {
-  const { connect, pkh, Tezos, network } = useBeacon();
+  const { connect, disconnect, pkh, Tezos, network } = useBeacon();
 
   const [tokenName, setTokenName] = useState("");
   const [tokenSymbol, setTokenSymbol] = useState("");
@@ -29,23 +30,25 @@ const FormBox = ({}) => {
   const handleClick = useCallback(async () => {
     setFetching(true);
     try {
+      const tokenSupplyUnits =
+        tokenSupply * new BigNumber(10).pow(tokenDecimals);
       const originationOp = await Tezos.wallet
         .originate({
           code: fa2Json,
           storage: {
             ledger: MichelsonMap.fromLiteral({
-              [tokenOwner]: { balance: tokenSupply, allowances: [] },
+              [tokenOwner]: { balance: tokenSupplyUnits, allowances: [] },
             }),
             operators: new MichelsonMap(),
             token_metadata: MichelsonMap.fromLiteral({
-              0: {
-                token_id: 0,
-                symbol: tokenSymbol,
-                name: tokenName,
-                decimals: tokenDecimals,
-                description: tokenDescription,
-                extras: new MichelsonMap(),
-              },
+              0: [
+                0,
+                MichelsonMap.fromLiteral({
+                  symbol: Buffer(tokenSymbol, "ascii").toString("hex"),
+                  name: Buffer(tokenName, "ascii").toString("hex"),
+                  decimals: Buffer(tokenDecimals, "ascii").toString("hex"),
+                }),
+              ],
             }),
             metadata: MichelsonMap.fromLiteral({
               "": Buffer("tezos-storage:contents", "ascii").toString("hex"),
@@ -62,12 +65,10 @@ const FormBox = ({}) => {
                 "ascii"
               ).toString("hex"),
             }),
-            total_supply: tokenSupply,
+            total_supply: tokenSupplyUnits,
           },
         })
         .send();
-      const contract = await originationOp.contract();
-      console.log(contract.address);
     } catch (e) {
       console.error(e);
     } finally {
@@ -113,12 +114,14 @@ const FormBox = ({}) => {
           <Form.Row>
             <Col>
               <FormField
+                type="number"
                 placeholder="Supply"
                 onChange={(e) => setTokenSupply(e.target.value)}
               ></FormField>
             </Col>
             <Col>
               <FormField
+                type="number"
                 placeholder="Decimals"
                 onChange={(e) => setTokenDecimals(e.target.value)}
               ></FormField>
@@ -152,7 +155,9 @@ const FormBox = ({}) => {
             <Col>
               <FormTextarea
                 placeholder="Description"
-                onChange={(e) => setTokenDescription(e.target.value)}
+                onChange={(e) => {
+                  setTokenDescription(e.target.value);
+                }}
               ></FormTextarea>
             </Col>
           </Form.Row>
@@ -181,7 +186,7 @@ const FormBox = ({}) => {
       </Col>
       <Col className="m-0 p-0">
         {!network ? (
-          <>{console.log(network)} </>
+          <> </>
         ) : (
           <div>
             <DeployButton
@@ -190,6 +195,7 @@ const FormBox = ({}) => {
               text={
                 <>
                   <div className="d-btn-h1-text">{network.name}</div>
+                  <div className="d-btn-h2-text">network</div>
                 </>
               }
             ></DeployButton>
@@ -207,6 +213,18 @@ const FormBox = ({}) => {
                     <div className="d-btn-h1-text">
                       {pkh.slice(0, 7) + "..."}
                     </div>
+                    <div className="d-btn-h2-text">address</div>
+                  </>
+                }
+              ></DeployButton>
+            </div>
+            <div>
+              <DeployButton
+                onClick={disconnect}
+                text={
+                  <>
+                    <div className="d-btn-h1-text">Disconnect</div>
+                    <div className="d-btn-h2-text">from Wallet</div>
                   </>
                 }
               ></DeployButton>

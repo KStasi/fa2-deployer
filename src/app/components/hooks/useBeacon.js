@@ -62,7 +62,24 @@ export const [UseBeaconProvider, useBeacon] = constate(() => {
     setNetwork(network);
   }, []);
 
-  return { connect, isConnected: !!pkh, Tezos, wallet, pkh, network };
+  const disconnect = useCallback(async () => {
+    console.log(wallet);
+    await wallet.disconnect();
+    await wallet.clearActiveAccount();
+    Tezos.setWalletProvider(wallet);
+    setUserPkh(undefined);
+    setNetwork(network);
+  }, []);
+
+  return {
+    connect,
+    disconnect,
+    isConnected: !!pkh,
+    Tezos,
+    wallet,
+    pkh,
+    network,
+  };
 });
 
 export default useBeacon;
