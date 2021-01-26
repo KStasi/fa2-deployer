@@ -8,7 +8,7 @@ const DeployButton = ({ onClick, text, className, type }) => {
   return (
     <>
       <Button
-        type={type}
+        // type={type}
         className={"d-btn px-10 py-1 my-2 " + className}
         onClick={onClick}
       >
