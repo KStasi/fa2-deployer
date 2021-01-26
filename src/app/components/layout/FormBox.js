@@ -26,6 +26,7 @@ const FormBox = ({}) => {
   const [tokenHomepage, setHomepage] = useState("");
   const [tokenDescription, setTokenDescription] = useState("");
   const [fetching, setFetching] = useState(false);
+  const [validated, setValidated] = useState(false);
 
   const handleClick = useCallback(async () => {
     setFetching(true);
@@ -54,13 +55,25 @@ const FormBox = ({}) => {
               "": Buffer("tezos-storage:contents", "ascii").toString("hex"),
               contents: Buffer(
                 JSON.stringify({
-                  token_id: 0,
-                  symbol: tokenSymbol,
-                  name: tokenName,
-                  decimals: tokenDecimals,
+                  version: "v0.0.1",
                   description: tokenDescription,
+                  name: tokenName,
+                  authors: ["Print Name " + tokenOwner],
                   homepage: tokenHomepage,
-                  logo: tokenLogo,
+                  source: {
+                    tools: ["Ligo dev-20201031", "Flextesa 20200921"],
+                    location: "https://ligolang.org/",
+                  },
+                  interfaces: ["TZIP-12", "TZIP-16"],
+                  errors: [],
+                  views: [],
+                  tokens: {
+                    dynamic: [
+                      {
+                        big_map: "token_metadata",
+                      },
+                    ],
+                  },
                 }),
                 "ascii"
               ).toString("hex"),
@@ -173,6 +186,7 @@ const FormBox = ({}) => {
             ></DeployButton>
           ) : (
             <DeployButton
+              type="submit"
               onClick={handleClick}
               text={
                 <>
