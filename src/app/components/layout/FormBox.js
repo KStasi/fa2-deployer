@@ -25,32 +25,40 @@ const FormBox = ({}) => {
   const [tokenLogo, setTokenLogo] = useState("");
   const [tokenHomepage, setHomepage] = useState("");
   const [tokenDescription, setTokenDescription] = useState("");
-  const [fetching, setFetching] = useState(false);
-  const [validated, setValidated] = useState(false);
+  const [, setFetching] = useState(false);
 
   const handleClick = useCallback(async () => {
     setFetching(true);
     try {
       const tokenSupplyUnits =
         tokenSupply * new BigNumber(10).pow(tokenDecimals);
-      const originationOp = await Tezos.wallet
+      await Tezos.wallet
         .originate({
           code: fa2Json,
           storage: {
-            ledger: MichelsonMap.fromLiteral({
-              [tokenOwner]: { balance: tokenSupplyUnits, allowances: [] },
-            }),
-            operators: new MichelsonMap(),
-            token_metadata: MichelsonMap.fromLiteral({
-              0: [
-                0,
-                MichelsonMap.fromLiteral({
-                  symbol: Buffer(tokenSymbol, "ascii").toString("hex"),
-                  name: Buffer(tokenName, "ascii").toString("hex"),
-                  decimals: Buffer(tokenDecimals, "ascii").toString("hex"),
-                }),
-              ],
-            }),
+            admin: {
+              admin: tokenOwner,
+              pending_admin: null,
+              paused: true,
+            },
+
+            assets: {
+              total_supply: tokenSupplyUnits,
+              ledger: MichelsonMap.fromLiteral({
+                [tokenOwner]: tokenSupplyUnits,
+              }),
+              operators: MichelsonMap.fromLiteral({}),
+              token_metadata: MichelsonMap.fromLiteral({
+                0: {
+                  token_id: 0,
+                  extras: MichelsonMap.fromLiteral({
+                    symbol: Buffer(tokenSymbol, "ascii").toString("hex"),
+                    name: Buffer(tokenName, "ascii").toString("hex"),
+                    decimals: Buffer(tokenDecimals, "ascii").toString("hex"),
+                  }),
+                },
+              }),
+            },
             metadata: MichelsonMap.fromLiteral({
               "": Buffer("tezos-storage:contents", "ascii").toString("hex"),
               contents: Buffer(
@@ -58,7 +66,7 @@ const FormBox = ({}) => {
                   version: "v0.0.1",
                   description: tokenDescription,
                   name: tokenName,
-                  authors: ["Print Name " + tokenOwner],
+                  authors: ["FA2 Bakery"],
                   homepage: tokenHomepage,
                   source: {
                     tools: ["Ligo dev-20201031", "Flextesa 20200921"],
