@@ -9,7 +9,7 @@ import "./App.css";
 const App = () => {
   return (
     <UseBeaconProvider>
-      <Container className="App" fluid>
+      <Container className="App h-100" fluid>
         <FormBox></FormBox>
       </Container>
     </UseBeaconProvider>

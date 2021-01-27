@@ -11,7 +11,7 @@ import useBeacon from "../hooks/useBeacon";
 import handleDeploy from "../hooks/handleDeploy";
 import { DEFAULT_NETWORK, NETWORKS } from "../../defaults";
 
-const FormBox = ({}) => {
+const FormBox = () => {
   const { connect, disconnect, pkh, Tezos, network } = useBeacon();
 
   const [tokenName, setTokenName] = useState("");
@@ -54,7 +54,12 @@ const FormBox = ({}) => {
     <Row>
       <Col className="m-0 p-0"></Col>
       <Col sm={4} className="m-0 p-0">
-        <Form className="FormBox p-3">
+        <Form
+          className="FormBox p-3"
+          onSubmit={(event) => {
+            event.preventDefault();
+          }}
+        >
           <p className="frm-h1-text m-0">FA 2 Bakery</p>
           <p className="frm-h2-text m-0 mb-3">
             Deploy your own token in a minute
@@ -126,7 +131,7 @@ const FormBox = ({}) => {
           </Form.Row>
           {!pkh ? (
             <DeployButton
-              onClick={() => connect(DEFAULT_NETWORK)}
+              onClick={() => connect(DEFAULT_NETWORK).catch(console.log)}
               text={
                 <>
                   <div className="d-btn-h1-text">Connect</div>

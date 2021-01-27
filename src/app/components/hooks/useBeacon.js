@@ -47,28 +47,26 @@ export const [UseBeaconProvider, useBeacon] = constate(() => {
   const [pkh, setUserPkh] = useState();
   const [network, setNetwork] = useState();
 
-  const connect = useCallback(async (network) => {
+  const connect = useCallback(async (currentNetwork) => {
     await wallet.requestPermissions({
-      network: { type: network.id },
+      network: { type: currentNetwork.id },
       scopes: [
         PermissionScope.OPERATION_REQUEST,
         PermissionScope.SIGN,
         PermissionScope.THRESHOLD,
       ],
     });
-
-    Tezos.setRpcProvider(network.rpcBaseURL);
+    Tezos.setRpcProvider(currentNetwork.rpcBaseURL);
     setUserPkh(await wallet.getPKH());
-    setNetwork(network);
+    setNetwork(currentNetwork);
   }, []);
 
   const disconnect = useCallback(async () => {
-    console.log(wallet);
     await wallet.disconnect();
     await wallet.clearActiveAccount();
     Tezos.setWalletProvider(wallet);
     setUserPkh(undefined);
-    setNetwork(network);
+    setNetwork(DEFAULT_NETWORK);
   }, []);
 
   return {
