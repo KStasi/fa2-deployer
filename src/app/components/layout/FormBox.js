@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from "react";
 import DeployButton from "../atoms/DeployButton";
 import FormField from "../atoms/FormField";
+import FormCheck from "../atoms/FormCheck";
 import FormTextarea from "../atoms/FormTextarea";
 import LogoImg from "../atoms/LogoImg";
 import Form from "react-bootstrap/Form";
@@ -22,6 +23,7 @@ const FormBox = () => {
   const [tokenLogo, setTokenLogo] = useState("");
   const [tokenHomepage, setHomepage] = useState("");
   const [tokenDescription, setTokenDescription] = useState("");
+  const [storeOnIpfs, setStoreOnIpfs] = useState(false);
   const [, setFetching] = useState(false);
 
   const handleClick = useCallback(async () => {
@@ -34,6 +36,7 @@ const FormBox = () => {
       tokenLogo,
       tokenHomepage,
       tokenDescription,
+      storeOnIpfs,
       Tezos.wallet,
       setFetching
     );
@@ -47,6 +50,7 @@ const FormBox = () => {
     tokenOwner,
     tokenLogo,
     tokenHomepage,
+    storeOnIpfs,
     tokenDescription,
   ]);
 
@@ -127,6 +131,17 @@ const FormBox = () => {
                   setTokenDescription(e.target.value);
                 }}
               ></FormTextarea>
+            </Col>
+          </Form.Row>
+          <Form.Row>
+            <Col>
+              <FormCheck
+                placeholder="Store on IPFS"
+                onChange={(e) => {
+                  console.log(e);
+                  setStoreOnIpfs(e.target.checked);
+                }}
+              ></FormCheck>
             </Col>
           </Form.Row>
           {!pkh ? (
