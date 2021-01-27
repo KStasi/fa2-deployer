@@ -109,8 +109,18 @@ const FormBox = () => {
           </Form.Row>
           <Form.Row>
             <Col>
+              <FormTextarea
+                placeholder="Description"
+                onChange={(e) => {
+                  setTokenDescription(e.target.value);
+                }}
+              ></FormTextarea>
+            </Col>
+          </Form.Row>
+          <Form.Row>
+            <Col>
               <FormField
-                placeholder="Icon"
+                placeholder="Url for Logo"
                 onChange={(e) => setTokenLogo(e.target.value)}
               ></FormField>
             </Col>
@@ -121,16 +131,6 @@ const FormBox = () => {
                 placeholder="Homepage"
                 onChange={(e) => setHomepage(e.target.value)}
               ></FormField>
-            </Col>
-          </Form.Row>
-          <Form.Row>
-            <Col>
-              <FormTextarea
-                placeholder="Description"
-                onChange={(e) => {
-                  setTokenDescription(e.target.value);
-                }}
-              ></FormTextarea>
             </Col>
           </Form.Row>
           <Form.Row>
