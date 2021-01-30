@@ -21,7 +21,9 @@
   border-color: transparent;
   border-radius: 10px;
   width: 40%;
+  min-width: 9vw;
 }
+
 .d-btn.btn:hover {
   background-color: #f28177;
   border-color: transparent;
@@ -29,6 +31,7 @@
 
 .d-btn.btn:focus,
 .d-btn.btn:active,
+.d-btn.btn-primary:not(:disabled):not(.disabled).active,
 .d-btn.btn-primary:not(:disabled):not(.disabled):active {
   background-color: #f28177;
   border-color: transparent;

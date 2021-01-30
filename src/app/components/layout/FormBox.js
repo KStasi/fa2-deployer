@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from "react";
 import DeployButton from "../atoms/DeployButton";
+import OptionButton from "../atoms/OptionButton";
 import FormField from "../atoms/FormField";
 import FormCheck from "../atoms/FormCheck";
 import FormTextarea from "../atoms/FormTextarea";
@@ -7,6 +8,7 @@ import LogoImg from "../atoms/LogoImg";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
 import "./FormBox.css";
 import useBeacon from "../hooks/useBeacon";
 import handleDeploy from "../hooks/handleDeploy";
@@ -24,6 +26,8 @@ const FormBox = () => {
   const [tokenHomepage, setHomepage] = useState("");
   const [tokenDescription, setTokenDescription] = useState("");
   const [storeOnIpfs, setStoreOnIpfs] = useState(false);
+  const [supplyTypeValue, setSupplyTypeValue] = useState("fixedSupply");
+  const [metadataTypeValue, setMetadataTypeValue] = useState("onChainMetadata");
   const [, setFetching] = useState(false);
 
   const handleClick = useCallback(async () => {
@@ -134,16 +138,64 @@ const FormBox = () => {
             </Col>
           </Form.Row>
           <Form.Row>
+            <Form.Label className="frm-label py-1">Supply type</Form.Label>
+          </Form.Row>
+          <Form.Row>
             <Col>
-              <FormCheck
-                placeholder="Store on IPFS"
-                onChange={(e) => {
-                  console.log(e);
-                  setStoreOnIpfs(e.target.checked);
-                }}
-              ></FormCheck>
+              <ButtonGroup toggle>
+                <OptionButton
+                  checked={supplyTypeValue === "fixedSupply"}
+                  value={"fixedSupply"}
+                  onChange={(e) => setSupplyTypeValue(e.currentTarget.value)}
+                  text={
+                    <>
+                      <div className="d-btn-h1-text">Fixed Supply</div>
+                    </>
+                  }
+                ></OptionButton>
+                <OptionButton
+                  checked={supplyTypeValue === "mintableSupply"}
+                  value={"mintableSupply"}
+                  onChange={(e) => setSupplyTypeValue(e.currentTarget.value)}
+                  text={
+                    <>
+                      <div className="d-btn-h1-text">Mintable</div>
+                    </>
+                  }
+                ></OptionButton>
+              </ButtonGroup>
             </Col>
           </Form.Row>
+          <Form.Row>
+            <Form.Label className="frm-label py-1">Metadata type</Form.Label>
+          </Form.Row>
+          <Form.Row>
+            <Col>
+              <ButtonGroup toggle>
+                <OptionButton
+                  checked={metadataTypeValue === "onChainMetadata"}
+                  value={"onChainMetadata"}
+                  onChange={(e) => setMetadataTypeValue(e.currentTarget.value)}
+                  text={
+                    <>
+                      <div className="d-btn-h1-text">On-chain</div>
+                    </>
+                  }
+                ></OptionButton>
+                <OptionButton
+                  checked={metadataTypeValue === "offChainMetadata"}
+                  value={"offChainMetadata"}
+                  onChange={(e) => setMetadataTypeValue(e.currentTarget.value)}
+                  text={
+                    <>
+                      <div className="d-btn-h1-text">Off-chain</div>
+                    </>
+                  }
+                ></OptionButton>
+              </ButtonGroup>
+            </Col>
+          </Form.Row>
+
           {!pkh ? (
             <DeployButton
               onClick={() => connect(DEFAULT_NETWORK).catch(console.log)}
@@ -169,26 +221,24 @@ const FormBox = () => {
         </Form>
       </Col>
       <Col className="m-0 p-0">
-        {!network ? (
+        {!pkh ? (
           <> </>
         ) : (
-          <div>
-            <DeployButton
-              className="mt-5"
-              onClick={() => connect(NETWORKS[+(NETWORKS[0].id == network.id)])}
-              text={
-                <>
-                  <div className="d-btn-h1-text">{network.name}</div>
-                  <div className="d-btn-h2-text">network</div>
-                </>
-              }
-            ></DeployButton>
-          </div>
-        )}
-        {!pkh ? (
-          <></>
-        ) : (
           <>
+            <div>
+              <DeployButton
+                className="mt-5"
+                onClick={() =>
+                  connect(NETWORKS[+(NETWORKS[0].id == network.id)])
+                }
+                text={
+                  <>
+                    <div className="d-btn-h1-text">{network.name}</div>
+                    <div className="d-btn-h2-text">network</div>
+                  </>
+                }
+              ></DeployButton>
+            </div>
             <div>
               <DeployButton
                 onClick={() => {}}
