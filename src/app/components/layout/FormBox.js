@@ -2,7 +2,6 @@ import React, { useCallback, useState } from "react";
 import DeployButton from "../atoms/DeployButton";
 import OptionButton from "../atoms/OptionButton";
 import FormField from "../atoms/FormField";
-import FormCheck from "../atoms/FormCheck";
 import FormTextarea from "../atoms/FormTextarea";
 import LogoImg from "../atoms/LogoImg";
 import Form from "react-bootstrap/Form";
@@ -25,10 +24,10 @@ const FormBox = () => {
   const [tokenLogo, setTokenLogo] = useState("");
   const [tokenHomepage, setHomepage] = useState("");
   const [tokenDescription, setTokenDescription] = useState("");
-  const [storeOnIpfs, setStoreOnIpfs] = useState(false);
   const [supplyTypeValue, setSupplyTypeValue] = useState("fixedSupply");
   const [metadataTypeValue, setMetadataTypeValue] = useState("onChainMetadata");
   const [, setFetching] = useState(false);
+  const storeOnIpfs = false;
 
   const handleClick = useCallback(async () => {
     await handleDeploy(
@@ -40,7 +39,8 @@ const FormBox = () => {
       tokenLogo,
       tokenHomepage,
       tokenDescription,
-      storeOnIpfs,
+      supplyTypeValue,
+      metadataTypeValue,
       Tezos.wallet,
       setFetching
     );
@@ -54,7 +54,8 @@ const FormBox = () => {
     tokenOwner,
     tokenLogo,
     tokenHomepage,
-    storeOnIpfs,
+    supplyTypeValue,
+    metadataTypeValue,
     tokenDescription,
   ]);
 

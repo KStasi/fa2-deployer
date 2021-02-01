@@ -45,7 +45,7 @@ Tezos.setSignerProvider(new LambdaViewSigner());
 
 export const [UseBeaconProvider, useBeacon] = constate(() => {
   const [pkh, setUserPkh] = useState();
-  const [network, setNetwork] = useState();
+  const [network, setNetwork] = useState(DEFAULT_NETWORK);
 
   const connect = useCallback(async (currentNetwork) => {
     await wallet.requestPermissions({

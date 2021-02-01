@@ -76,7 +76,7 @@
                                   { "prim": "string" },
                                   { "prim": "bytes" }
                                 ],
-                                "annots": ["%extras"]
+                                "annots": ["%token_info"]
                               }
                             ]
                           }

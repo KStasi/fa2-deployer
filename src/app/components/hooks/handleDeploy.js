@@ -1,6 +1,7 @@
 import { MichelsonMap } from "@taquito/michelson-encoder";
 
-import fa2Json from "../assets/TokenFA2.json";
+import fa2FixedJson from "../assets/FA2FixedSuppply.json";
+import fa2MintableJson from "../assets/TokenFA2.json";
 import { BigNumber } from "bignumber.js";
 import ipfsClient from "ipfs-http-client";
 
@@ -13,7 +14,8 @@ const handleDeploy = async (
   tokenLogo,
   tokenHomepage,
   tokenDescription,
-  storeOnIpfs,
+  supplyTypeValue,
+  metadataTypeValue,
   wallet,
   setFetching
 ) => {
@@ -23,7 +25,6 @@ const handleDeploy = async (
     let metadata = new Buffer(
       JSON.stringify({
         version: "v0.0.1",
-        description: tokenDescription,
         name: tokenName,
         authors: ["FA2 Bakery"],
         homepage: tokenHomepage,
@@ -32,14 +33,13 @@ const handleDeploy = async (
           tools: ["Ligo dev-20201031", "Flextesa 20200921"],
           location: "https://ligolang.org/",
         },
-        interfaces: ["TZIP-12", "TZIP-16"],
+        interfaces: ["TZIP-012", "TZIP-016"],
         errors: [],
         views: [],
       }),
       "ascii"
     );
-    console.log(storeOnIpfs);
-    if (storeOnIpfs) {
+    if (metadataTypeValue == "offChainMetadata") {
       const ipfs = ipfsClient("https://ipfs.infura.io:5001/api/v0/");
       const result = await ipfs.add([metadata]);
       metadata = MichelsonMap.fromLiteral({
@@ -51,35 +51,39 @@ const handleDeploy = async (
         contents: metadata.toString("hex"),
       });
     }
+
+    const storage = {
+      admin: {
+        admin: tokenOwner,
+        pending_admin: null,
+        paused: false,
+      },
+      assets: {
+        total_supply: tokenSupplyUnits,
+        ledger: MichelsonMap.fromLiteral({
+          [tokenOwner]: tokenSupplyUnits,
+        }),
+        operators: MichelsonMap.fromLiteral({}),
+        token_metadata: MichelsonMap.fromLiteral({
+          0: {
+            token_id: 0,
+            token_info: MichelsonMap.fromLiteral({
+              symbol: Buffer(tokenSymbol, "ascii").toString("hex"),
+              name: Buffer(tokenName, "ascii").toString("hex"),
+              decimals: Buffer(tokenDecimals, "ascii").toString("hex"),
+              description: Buffer(tokenDescription, "ascii").toString("hex"),
+            }),
+          },
+        }),
+      },
+      metadata: metadata,
+      total_supply: tokenSupplyUnits,
+    };
+
     await wallet
       .originate({
-        code: fa2Json,
-        storage: {
-          admin: {
-            admin: tokenOwner,
-            pending_admin: null,
-            paused: false,
-          },
-          assets: {
-            total_supply: tokenSupplyUnits,
-            ledger: MichelsonMap.fromLiteral({
-              [tokenOwner]: tokenSupplyUnits,
-            }),
-            operators: MichelsonMap.fromLiteral({}),
-            token_metadata: MichelsonMap.fromLiteral({
-              0: {
-                token_id: 0,
-                extras: MichelsonMap.fromLiteral({
-                  symbol: Buffer(tokenSymbol, "ascii").toString("hex"),
-                  name: Buffer(tokenName, "ascii").toString("hex"),
-                  decimals: Buffer(tokenDecimals, "ascii").toString("hex"),
-                }),
-              },
-            }),
-          },
-          metadata: metadata,
-          total_supply: tokenSupplyUnits,
-        },
+        code: fa2MintableJson,
+        storage,
       })
       .send();
   } catch (e) {
