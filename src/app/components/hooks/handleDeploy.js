@@ -1,6 +1,6 @@
 import { MichelsonMap } from "@taquito/michelson-encoder";
 
-import fa2FixedJson from "../assets/FA2FixedSuppply.json";
+import fa2FixedJson from "../assets/FA2FixedSupply.json";
 import fa2MintableJson from "../assets/TokenFA2.json";
 import { BigNumber } from "bignumber.js";
 import ipfsClient from "ipfs-http-client";
@@ -82,7 +82,7 @@ const handleDeploy = async (
 
     await wallet
       .originate({
-        code: fa2MintableJson,
+        code: supplyTypeValue == "fixedSupply" ? fa2FixedJson : fa2MintableJson,
         storage,
       })
       .send();

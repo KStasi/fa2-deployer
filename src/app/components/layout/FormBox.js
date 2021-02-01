@@ -69,7 +69,7 @@ const FormBox = () => {
             event.preventDefault();
           }}
         >
-          <p className="frm-h1-text m-0">FA 2 Bakery</p>
+          <p className="frm-h1-text m-0">FA2 Bakery</p>
           <p className="frm-h2-text m-0 mb-3">
             Deploy your own token in a minute
           </p>
