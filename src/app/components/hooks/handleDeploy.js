@@ -28,7 +28,7 @@ const handleDeploy = async (
         name: tokenName,
         authors: ["FA2 Bakery"],
         homepage: tokenHomepage,
-        logo: tokenLogo,
+        thumbnailUri: tokenLogo,
         source: {
           tools: ["Ligo dev-20201031", "Flextesa 20200921"],
           location: "https://ligolang.org/",
