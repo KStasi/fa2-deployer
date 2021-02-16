@@ -68,8 +68,12 @@ const handleDeploy = async (
               symbol: Buffer(tokenSymbol, "ascii").toString("hex"),
               name: Buffer(tokenName, "ascii").toString("hex"),
               decimals: Buffer(tokenDecimals, "ascii").toString("hex"),
-              description: Buffer(tokenDescription, "ascii").toString("hex"),
-              thumbnailUri: Buffer(tokenLogo, "ascii").toString("hex"),
+              ...(tokenDescription && {
+                description: Buffer(tokenDescription, "ascii").toString("hex"),
+              }),
+              ...(tokenLogo && {
+                thumbnailUri: Buffer(tokenLogo, "ascii").toString("hex"),
+              }),
             }),
           },
         }),
