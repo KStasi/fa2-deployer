@@ -12,7 +12,6 @@ const handleDeploy = async (
   tokenDecimals,
   tokenOwner,
   tokenLogo,
-  tokenHomepage,
   tokenDescription,
   supplyTypeValue,
   metadataTypeValue,
@@ -27,7 +26,6 @@ const handleDeploy = async (
         version: "v0.0.1",
         name: tokenName,
         authors: ["FA2 Bakery"],
-        homepage: tokenHomepage,
         source: {
           tools: ["Ligo dev-20201031", "Flextesa 20200921"],
           location: "https://ligolang.org/",

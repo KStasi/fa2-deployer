@@ -8,7 +8,7 @@ const OptionButton = ({ onChange, text, className, checked, value }) => {
   return (
     <>
       <ToggleButton
-        className={"d-btn px-10 py-1 my-2 " + className}
+        className={"d-btn o-btn px-10 py-1 my-2 " + className}
         type="radio"
         value={value}
         checked={checked}

@@ -22,7 +22,6 @@ const FormBox = () => {
   const [tokenDecimals, setTokenDecimals] = useState("");
   const [tokenOwner, setTokenOwner] = useState("");
   const [tokenLogo, setTokenLogo] = useState("");
-  const [tokenHomepage, setHomepage] = useState("");
   const [tokenDescription, setTokenDescription] = useState("");
   const [supplyTypeValue, setSupplyTypeValue] = useState("fixedSupply");
   const [metadataTypeValue, setMetadataTypeValue] = useState("onChainMetadata");
@@ -37,7 +36,6 @@ const FormBox = () => {
       tokenDecimals,
       tokenOwner,
       tokenLogo,
-      tokenHomepage,
       tokenDescription,
       supplyTypeValue,
       metadataTypeValue,
@@ -53,14 +51,13 @@ const FormBox = () => {
     tokenDecimals,
     tokenOwner,
     tokenLogo,
-    tokenHomepage,
     supplyTypeValue,
     metadataTypeValue,
     tokenDescription,
   ]);
 
   return (
-    <Row>
+    <Row className="w-100 ">
       <Col className="m-0 p-0"></Col>
       <Col sm={4} className="m-0 p-0">
         <Form
@@ -69,14 +66,77 @@ const FormBox = () => {
             event.preventDefault();
           }}
         >
-          <p className="frm-h1-text m-0">FA2 Bakery</p>
-          <p className="frm-h2-text m-0 mb-3">
-            Deploy your own token in a minute
-          </p>
           <Form.Row>
             <Col>
+              <div className="frm-h1-text m-0 my-3">
+                Tezos Token Constructor
+              </div>
               <LogoImg></LogoImg>
+              <div className="frm-h-text m-0 my-3">
+                Deploy your own token in a minute
+              </div>
             </Col>
+          </Form.Row>
+          <Form.Row>
+            <Col>
+              <Form.Label className="frm-label py-1">Supply type</Form.Label>
+              <ButtonGroup toggle>
+                <OptionButton
+                  checked={supplyTypeValue === "fixedSupply"}
+                  value={"fixedSupply"}
+                  onChange={(e) => setSupplyTypeValue(e.currentTarget.value)}
+                  text={
+                    <>
+                      <div className="o-btn-h1-text">Fixed Supply</div>
+                    </>
+                  }
+                ></OptionButton>
+                <OptionButton
+                  checked={supplyTypeValue === "mintableSupply"}
+                  value={"mintableSupply"}
+                  onChange={(e) => setSupplyTypeValue(e.currentTarget.value)}
+                  text={
+                    <>
+                      <div className="o-btn-h1-text">Mintable</div>
+                    </>
+                  }
+                ></OptionButton>
+              </ButtonGroup>
+            </Col>
+            <Col>
+              <Form.Label className="frm-label py-1">Metadata type</Form.Label>
+              <ButtonGroup toggle>
+                <OptionButton
+                  checked={metadataTypeValue === "onChainMetadata"}
+                  value={"onChainMetadata"}
+                  onChange={(e) => setMetadataTypeValue(e.currentTarget.value)}
+                  text={
+                    <>
+                      <div className="o-btn-h1-text">On-chain</div>
+                    </>
+                  }
+                ></OptionButton>
+                <OptionButton
+                  checked={metadataTypeValue === "offChainMetadata"}
+                  value={"offChainMetadata"}
+                  onChange={(e) => setMetadataTypeValue(e.currentTarget.value)}
+                  text={
+                    <>
+                      <div className="o-btn-h1-text">Off-chain</div>
+                    </>
+                  }
+                ></OptionButton>
+              </ButtonGroup>
+            </Col>
+          </Form.Row>
+          <Form.Row>
+            <Col>
+              <div className="frm-h-text m-0 my-3">
+                Insert the details of your token
+              </div>
+            </Col>
+          </Form.Row>
+          <Form.Row>
             <Col>
               <FormField
                 placeholder="Name"
@@ -87,16 +147,12 @@ const FormBox = () => {
                 onChange={(e) => setTokenSymbol(e.target.value)}
               ></FormField>
             </Col>
-          </Form.Row>
-          <Form.Row>
             <Col>
               <FormField
                 type="number"
                 placeholder="Supply"
                 onChange={(e) => setTokenSupply(e.target.value)}
               ></FormField>
-            </Col>
-            <Col>
               <FormField
                 type="number"
                 placeholder="Decimals"
@@ -125,78 +181,11 @@ const FormBox = () => {
           <Form.Row>
             <Col>
               <FormField
-                placeholder="Url for Logo"
+                placeholder="Url for Logo image, max size of 350x350px"
                 onChange={(e) => setTokenLogo(e.target.value)}
               ></FormField>
             </Col>
           </Form.Row>
-          <Form.Row>
-            <Col>
-              <FormField
-                placeholder="Homepage"
-                onChange={(e) => setHomepage(e.target.value)}
-              ></FormField>
-            </Col>
-          </Form.Row>
-          <Form.Row>
-            <Form.Label className="frm-label py-1">Supply type</Form.Label>
-          </Form.Row>
-          <Form.Row>
-            <Col>
-              <ButtonGroup toggle>
-                <OptionButton
-                  checked={supplyTypeValue === "fixedSupply"}
-                  value={"fixedSupply"}
-                  onChange={(e) => setSupplyTypeValue(e.currentTarget.value)}
-                  text={
-                    <>
-                      <div className="d-btn-h1-text">Fixed Supply</div>
-                    </>
-                  }
-                ></OptionButton>
-                <OptionButton
-                  checked={supplyTypeValue === "mintableSupply"}
-                  value={"mintableSupply"}
-                  onChange={(e) => setSupplyTypeValue(e.currentTarget.value)}
-                  text={
-                    <>
-                      <div className="d-btn-h1-text">Mintable</div>
-                    </>
-                  }
-                ></OptionButton>
-              </ButtonGroup>
-            </Col>
-          </Form.Row>
-          <Form.Row>
-            <Form.Label className="frm-label py-1">Metadata type</Form.Label>
-          </Form.Row>
-          <Form.Row>
-            <Col>
-              <ButtonGroup toggle>
-                <OptionButton
-                  checked={metadataTypeValue === "onChainMetadata"}
-                  value={"onChainMetadata"}
-                  onChange={(e) => setMetadataTypeValue(e.currentTarget.value)}
-                  text={
-                    <>
-                      <div className="d-btn-h1-text">On-chain</div>
-                    </>
-                  }
-                ></OptionButton>
-                <OptionButton
-                  checked={metadataTypeValue === "offChainMetadata"}
-                  value={"offChainMetadata"}
-                  onChange={(e) => setMetadataTypeValue(e.currentTarget.value)}
-                  text={
-                    <>
-                      <div className="d-btn-h1-text">Off-chain</div>
-                    </>
-                  }
-                ></OptionButton>
-              </ButtonGroup>
-            </Col>
-          </Form.Row>
-
           {!pkh ? (
             <DeployButton
               onClick={() => connect(DEFAULT_NETWORK).catch(console.log)}

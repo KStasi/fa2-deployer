@@ -21,8 +21,9 @@
 }
 
 .frm-label {
+  font: normal bold normal 0.8rem Roboto;
   letter-spacing: 0px;
   color: #61568c;
-  text-align: center;
+  text-align: right;
   margin: auto;
 }

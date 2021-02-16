@@ -29,6 +29,30 @@
   border-color: transparent;
 }
 
+.o-btn.btn {
+  border-radius: 10px;
+  width: 40%;
+  min-width: 7vw;
+}
+
+.o-btn-h1-text {
+  text-align: center;
+  font-family: Roboto;
+  font-weight: normal;
+  letter-spacing: 0px;
+  color: #61568c;
+  font-size: 0.7rem;
+}
+
+.o-btn-h2-text {
+  text-align: center;
+  font-family: Roboto;
+  font-weight: normal;
+  letter-spacing: 0px;
+  color: #61568c;
+  font-size: 0.5rem;
+}
+
 .d-btn.btn:focus,
 .d-btn.btn:active,
 .d-btn.btn-primary:not(:disabled):not(.disabled).active,
