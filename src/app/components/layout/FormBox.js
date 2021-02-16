@@ -73,10 +73,8 @@ const FormBox = () => {
         >
           <Form.Row>
             <Col>
-              <div className="frm-h1-text m-0 my-3">
-                Tezos Token Constructor
-              </div>
               <LogoImg img={img}></LogoImg>
+              <div className="frm-h1-text m-0 my-3">Tezos Token Factory</div>
               <div className="frm-h-text m-0 my-3">
                 Deploy your own token in a minute
               </div>
@@ -134,13 +132,7 @@ const FormBox = () => {
               </ButtonGroup>
             </Col>
           </Form.Row>
-          <Form.Row>
-            <Col>
-              <div className="frm-h-text m-0 my-3">
-                Insert the details of your token
-              </div>
-            </Col>
-          </Form.Row>
+          <Form.Row></Form.Row>
           <Form.Row>
             <Col>
               <FormField
@@ -177,7 +169,7 @@ const FormBox = () => {
           <Form.Row>
             <Col>
               <FormTextarea
-                placeholder="Description (e.q. This is my first token)"
+                placeholder="Description (e.q. This is my first token)*"
                 onChange={(e) => {
                   setTokenDescription(e.target.value);
                 }}
@@ -187,7 +179,7 @@ const FormBox = () => {
           <Form.Row>
             <Col>
               <FormField
-                placeholder="Url for Logo image (e.q. htpps://logo.png)"
+                placeholder="Token's image (https://web.co/logo.png, max - 350x350 px)*"
                 notRequired={true}
                 onChange={(e) => {
                   setTokenLogo(e.target.value);
@@ -201,6 +193,13 @@ const FormBox = () => {
                   }
                 }}
               ></FormField>
+            </Col>
+          </Form.Row>
+          <Form.Row>
+            <Col>
+              <div className="frm-h-text m-0 px-2 text-left">
+                * Optional fields
+              </div>
             </Col>
           </Form.Row>
           <DeployButton
