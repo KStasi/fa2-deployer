@@ -39,7 +39,7 @@ const FormBox = () => {
       tokenSymbol,
       tokenSupply,
       tokenDecimals,
-      tokenOwner,
+      tokenOwner || pkh,
       tokenLogo,
       tokenDescription,
       supplyTypeValue,
@@ -144,23 +144,23 @@ const FormBox = () => {
           <Form.Row>
             <Col>
               <FormField
-                placeholder="Name"
+                placeholder="Name (e.q. Dollar)"
                 onChange={(e) => setTokenName(e.target.value)}
               ></FormField>
               <FormField
-                placeholder="Symbol"
+                placeholder="Symbol (e.q. USD)"
                 onChange={(e) => setTokenSymbol(e.target.value)}
               ></FormField>
             </Col>
             <Col>
               <FormField
                 type="number"
-                placeholder="Supply"
+                placeholder="Supply (e.q. 1.000.000)"
                 onChange={(e) => setTokenSupply(e.target.value)}
               ></FormField>
               <FormField
                 type="number"
-                placeholder="Decimals"
+                placeholder="Decimals (e.q. 2)"
                 onChange={(e) => setTokenDecimals(e.target.value)}
               ></FormField>
             </Col>
@@ -168,7 +168,7 @@ const FormBox = () => {
           <Form.Row>
             <Col>
               <FormField
-                placeholder="Owner"
+                placeholder="Owner (e.q. tz1VSUr...)"
                 defaultValue={pkh}
                 onChange={(e) => setTokenOwner(e.target.value)}
               ></FormField>
@@ -177,7 +177,7 @@ const FormBox = () => {
           <Form.Row>
             <Col>
               <FormTextarea
-                placeholder="Description"
+                placeholder="Description (e.q. This is my first token)"
                 onChange={(e) => {
                   setTokenDescription(e.target.value);
                 }}
@@ -187,7 +187,8 @@ const FormBox = () => {
           <Form.Row>
             <Col>
               <FormField
-                placeholder="Url for Logo image, max size of 350x350px"
+                placeholder="Url for Logo image (e.q. htpps://logo.png)"
+                notRequired={true}
                 onChange={(e) => {
                   setTokenLogo(e.target.value);
                   if (checkURL(e.target.value)) {
@@ -202,33 +203,31 @@ const FormBox = () => {
               ></FormField>
             </Col>
           </Form.Row>
-          {!pkh ? (
-            <DeployButton
-              onClick={() => connect(DEFAULT_NETWORK).catch(console.log)}
-              text={
-                <>
-                  <div className="d-btn-h1-text">Connect</div>
-                  <div className="d-btn-h2-text">to Wallet</div>
-                </>
-              }
-            ></DeployButton>
-          ) : (
-            <DeployButton
-              type="submit"
-              onClick={handleClick}
-              text={
-                <>
-                  <div className="d-btn-h1-text">Deploy</div>
-                  <div className="d-btn-h2-text">with Wallet</div>
-                </>
-              }
-            ></DeployButton>
-          )}
+          <DeployButton
+            type="submit"
+            onClick={handleClick}
+            disabled={!pkh}
+            text={
+              <>
+                <div className="d-btn-h1-text">Deploy</div>
+                <div className="d-btn-h2-text">with Wallet</div>
+              </>
+            }
+          ></DeployButton>
         </Form>
       </Col>
       <Col className="m-0 p-0">
         {!pkh ? (
-          <> </>
+          <DeployButton
+            className="mt-5"
+            onClick={() => connect(DEFAULT_NETWORK).catch(console.log)}
+            text={
+              <>
+                <div className="d-btn-h1-text">Connect</div>
+                <div className="d-btn-h2-text">Your Wallet</div>
+              </>
+            }
+          ></DeployButton>
         ) : (
           <>
             <div>

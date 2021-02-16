@@ -55,6 +55,7 @@
 
 .d-btn.btn:focus,
 .d-btn.btn:active,
+.d-btn.btn:disabled,
 .d-btn.btn-primary:not(:disabled):not(.disabled).active,
 .d-btn.btn-primary:not(:disabled):not(.disabled):active {
   background-color: #f28177;

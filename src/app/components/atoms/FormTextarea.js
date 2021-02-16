@@ -8,7 +8,6 @@ const FormTextarea = ({ placeholder, onChange }) => {
     <>
       <Form.Control
         size="lg"
-        required
         as="textarea"
         onChange={onChange}
         placeholder={placeholder}

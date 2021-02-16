@@ -3,13 +3,19 @@ import React from "react";
 import "./FormField.css";
 import Form from "react-bootstrap/Form";
 
-const FormField = ({ placeholder, onChange, type, defaultValue }) => {
+const FormField = ({
+  placeholder,
+  onChange,
+  type,
+  defaultValue,
+  notRequired,
+}) => {
   type = type || "text";
   return (
     <>
       <Form.Control
         size="lg"
-        required
+        required={!notRequired}
         type={type}
         defaultValue={defaultValue ? defaultValue : ""}
         placeholder={placeholder}
