@@ -12,6 +12,11 @@ import "./FormBox.css";
 import useBeacon from "../hooks/useBeacon";
 import handleDeploy from "../hooks/handleDeploy";
 import { DEFAULT_NETWORK, NETWORKS } from "../../defaults";
+import http from "http";
+
+const checkURL = (url) => {
+  return url && url.match(/\.(jpeg|jpg|gif|png)$/) != null;
+};
 
 const FormBox = () => {
   const { connect, disconnect, pkh, Tezos, network } = useBeacon();
@@ -22,11 +27,11 @@ const FormBox = () => {
   const [tokenDecimals, setTokenDecimals] = useState("");
   const [tokenOwner, setTokenOwner] = useState("");
   const [tokenLogo, setTokenLogo] = useState("");
+  const [img, setImage] = useState("");
   const [tokenDescription, setTokenDescription] = useState("");
   const [supplyTypeValue, setSupplyTypeValue] = useState("fixedSupply");
   const [metadataTypeValue, setMetadataTypeValue] = useState("onChainMetadata");
   const [, setFetching] = useState(false);
-  const storeOnIpfs = false;
 
   const handleClick = useCallback(async () => {
     await handleDeploy(
@@ -71,7 +76,7 @@ const FormBox = () => {
               <div className="frm-h1-text m-0 my-3">
                 Tezos Token Constructor
               </div>
-              <LogoImg></LogoImg>
+              <LogoImg img={img}></LogoImg>
               <div className="frm-h-text m-0 my-3">
                 Deploy your own token in a minute
               </div>
@@ -164,6 +169,7 @@ const FormBox = () => {
             <Col>
               <FormField
                 placeholder="Owner"
+                defaultValue={pkh}
                 onChange={(e) => setTokenOwner(e.target.value)}
               ></FormField>
             </Col>
@@ -182,7 +188,17 @@ const FormBox = () => {
             <Col>
               <FormField
                 placeholder="Url for Logo image, max size of 350x350px"
-                onChange={(e) => setTokenLogo(e.target.value)}
+                onChange={(e) => {
+                  setTokenLogo(e.target.value);
+                  if (checkURL(e.target.value)) {
+                    const req = http.request(e.target.value, function (r) {
+                      if (r.statusCode == 200) setImage(e.target.value);
+                      else setImage(undefined);
+                    });
+                    req.on("error", function (e) {});
+                    req.end();
+                  }
+                }}
               ></FormField>
             </Col>
           </Form.Row>
