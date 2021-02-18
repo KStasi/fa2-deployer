@@ -31,6 +31,7 @@ const FormBox = () => {
   const [tokenDescription, setTokenDescription] = useState("");
   const [supplyTypeValue, setSupplyTypeValue] = useState("fixedSupply");
   const [metadataTypeValue, setMetadataTypeValue] = useState("onChainMetadata");
+  const [pausableTypeValue, setPausableTypeValue] = useState("pausable");
   const [, setFetching] = useState(false);
 
   const handleClick = useCallback(async () => {
@@ -44,6 +45,7 @@ const FormBox = () => {
       tokenDescription,
       supplyTypeValue,
       metadataTypeValue,
+      pausableTypeValue,
       Tezos.wallet,
       setFetching
     );
@@ -58,6 +60,7 @@ const FormBox = () => {
     tokenLogo,
     supplyTypeValue,
     metadataTypeValue,
+    pausableTypeValue,
     tokenDescription,
   ]);
 
@@ -110,22 +113,22 @@ const FormBox = () => {
               <Form.Label className="frm-label py-1">Metadata type</Form.Label>
               <ButtonGroup toggle>
                 <OptionButton
-                  checked={metadataTypeValue === "onChainMetadata"}
-                  value={"onChainMetadata"}
-                  onChange={(e) => setMetadataTypeValue(e.currentTarget.value)}
+                  checked={pausableTypeValue === "pausable"}
+                  value={"pausable"}
+                  onChange={(e) => setPausableTypeValue(e.currentTarget.value)}
                   text={
                     <>
-                      <div className="o-btn-h1-text">On-chain</div>
+                      <div className="o-btn-h1-text">Pausable</div>
                     </>
                   }
                 ></OptionButton>
                 <OptionButton
-                  checked={metadataTypeValue === "offChainMetadata"}
-                  value={"offChainMetadata"}
-                  onChange={(e) => setMetadataTypeValue(e.currentTarget.value)}
+                  checked={pausableTypeValue === "notPausable"}
+                  value={"notPausable"}
+                  onChange={(e) => setPausableTypeValue(e.currentTarget.value)}
                   text={
                     <>
-                      <div className="o-btn-h1-text">Off-chain</div>
+                      <div className="o-btn-h1-text">Not pausable</div>
                     </>
                   }
                 ></OptionButton>
@@ -197,7 +200,7 @@ const FormBox = () => {
           </Form.Row>
           <Form.Row>
             <Col>
-              <div className="frm-h-text m-0 px-2 text-left">
+              <div className="o-btn-h1-text m-0 px-2 py-2 text-left">
                 * Optional fields
               </div>
             </Col>
