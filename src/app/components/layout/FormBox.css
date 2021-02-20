@@ -3,9 +3,14 @@
   background: #f2f2f2;
   box-shadow: -1px -3px 79px #20212c;
   border-radius: 15px;
-  margin: 8vh 0;
+  margin: 8vh auto;
   color: #61568c;
   font: normal normal normal 1rem Roboto;
+}
+
+.d-modal {
+  margin: 0 auto;
+  text-align: center;
 }
 
 .frm-h1-text {

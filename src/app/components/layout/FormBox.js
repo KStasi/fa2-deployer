@@ -65,7 +65,7 @@ const FormBox = () => {
   ]);
 
   return (
-    <Row className="w-100 ">
+    <Row className="m-0 p-0">
       <Col className="m-0 p-0"></Col>
       <Col sm={4} className="m-0 p-0">
         <Form
@@ -172,7 +172,7 @@ const FormBox = () => {
           <Form.Row>
             <Col>
               <FormTextarea
-                placeholder="Description (e.q. This is my first token)*"
+                placeholder="*Description (e.q. This is my first token)"
                 onChange={(e) => {
                   setTokenDescription(e.target.value);
                 }}
@@ -182,7 +182,7 @@ const FormBox = () => {
           <Form.Row>
             <Col>
               <FormField
-                placeholder="Token's image (https://web.co/logo.png, max - 350x350 px)*"
+                placeholder="*Token's image (https://web.co/logo.png, max - 350x350 px)"
                 notRequired={true}
                 onChange={(e) => {
                   setTokenLogo(e.target.value);
