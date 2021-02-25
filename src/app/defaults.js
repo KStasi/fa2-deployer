@@ -24,4 +24,4 @@ export const NETWORKS = [
   },
 ];
 
-export const DEFAULT_NETWORK = NETWORKS[0];
+export const DEFAULT_NETWORK = NETWORKS[1];
