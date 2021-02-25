@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import constate from "constate";
 
 import { BeaconWallet } from "@taquito/beacon-wallet";
-import { PermissionScope } from "@airgap/beacon-sdk";
+import { PermissionScope, NetworkType } from "@airgap/beacon-sdk";
 import { TezosToolkit } from "@taquito/taquito";
 
 import { DEFAULT_NETWORK } from "../../defaults";
@@ -51,7 +51,7 @@ export const [UseBeaconProvider, useBeacon] = constate(() => {
     await wallet.disconnect();
     await wallet.clearActiveAccount();
     await wallet.requestPermissions({
-      network: { type: currentNetwork.id },
+      network: { type: NetworkType.CUSTOM, rpcUrl: currentNetwork.rpcBaseURL },
       scopes: [
         PermissionScope.OPERATION_REQUEST,
         PermissionScope.SIGN,

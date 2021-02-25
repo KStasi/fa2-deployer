@@ -6,21 +6,21 @@ export const NETWORKS = [
     nextNetworkIndex: 1,
     name: "Delphinet",
     type: "test",
-    rpcBaseURL: "https://testnet-tezos.giganode.io",
+    rpcBaseURL: "https://delphinet.smartpy.io/",
   },
   {
     id: NetworkType.EDONET,
     nextNetworkIndex: 2,
     name: "Edonet",
     type: "test",
-    rpcBaseURL: "https://edonet-tezos.giganode.io",
+    rpcBaseURL: "https://edonet.smartpy.io/",
   },
   {
     id: NetworkType.MAINNET,
     nextNetworkIndex: 0,
     name: "Mainnet",
     type: "main",
-    rpcBaseURL: "https://mainnet-tezos.giganode.io",
+    rpcBaseURL: "https://mainnet.smartpy.io",
   },
 ];
 
