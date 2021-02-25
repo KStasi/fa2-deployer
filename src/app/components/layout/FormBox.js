@@ -235,7 +235,7 @@ const FormBox = () => {
             <div>
               <DeployButton
                 className="mt-5"
-                onClick={() => connect(DEFAULT_NETWORK)}
+                onClick={() => connect(NETWORKS[network.nextNetworkIndex])}
                 text={
                   <>
                     <div className="d-btn-h1-text">{network.name}</div>
