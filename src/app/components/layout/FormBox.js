@@ -110,7 +110,7 @@ const FormBox = () => {
               </ButtonGroup>
             </Col>
             <Col>
-              <Form.Label className="frm-label py-1">Metadata type</Form.Label>
+              <Form.Label className="frm-label py-1">Token type</Form.Label>
               <ButtonGroup toggle>
                 <OptionButton
                   checked={pausableTypeValue === "pausable"}
@@ -235,9 +235,7 @@ const FormBox = () => {
             <div>
               <DeployButton
                 className="mt-5"
-                onClick={() =>
-                  connect(NETWORKS[+(NETWORKS[0].id == network.id)])
-                }
+                onClick={() => connect(NETWORKS[network.nextNetworkIndex])}
                 text={
                   <>
                     <div className="d-btn-h1-text">{network.name}</div>
