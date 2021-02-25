@@ -48,6 +48,8 @@ export const [UseBeaconProvider, useBeacon] = constate(() => {
   const [network, setNetwork] = useState(DEFAULT_NETWORK);
 
   const connect = useCallback(async (currentNetwork) => {
+    await wallet.disconnect();
+    await wallet.clearActiveAccount();
     await wallet.requestPermissions({
       network: { type: currentNetwork.id },
       scopes: [
