@@ -36,6 +36,7 @@ const handleDeploy = async (
         interfaces: ["TZIP-012", "TZIP-016"],
         errors: [],
         views: [],
+        shouldPreferSymbol: true,
       }),
       "ascii"
     );
