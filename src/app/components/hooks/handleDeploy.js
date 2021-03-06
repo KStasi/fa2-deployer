@@ -36,7 +36,6 @@ const handleDeploy = async (
         interfaces: ["TZIP-012", "TZIP-016"],
         errors: [],
         views: [],
-        shouldPreferSymbol: true,
       }),
       "ascii"
     );
@@ -72,6 +71,8 @@ const handleDeploy = async (
               symbol: Buffer(tokenSymbol, "ascii").toString("hex"),
               name: Buffer(tokenName, "ascii").toString("hex"),
               decimals: Buffer(tokenDecimals, "ascii").toString("hex"),
+              shouldPreferSymbol: Buffer("true", "ascii").toString("hex"),
+
               ...(tokenDescription && {
                 description: Buffer(tokenDescription, "ascii").toString("hex"),
               }),
