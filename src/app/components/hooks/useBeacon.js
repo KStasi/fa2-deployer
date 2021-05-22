@@ -51,7 +51,8 @@ export const [UseBeaconProvider, useBeacon] = constate(() => {
     await wallet.disconnect();
     await wallet.clearActiveAccount();
     await wallet.requestPermissions({
-      network: { type: NetworkType.CUSTOM, rpcUrl: currentNetwork.rpcBaseURL },
+      // network: { type: NetworkType.CUSTOM, rpcUrl: currentNetwork.rpcBaseURL },
+      network: { type: currentNetwork.id },
       scopes: [
         PermissionScope.OPERATION_REQUEST,
         PermissionScope.SIGN,
