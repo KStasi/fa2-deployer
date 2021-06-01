@@ -2,8 +2,8 @@ import { MichelsonMap } from "@taquito/michelson-encoder";
 
 import fa2FixedJson from "../assets/FA2FixedSupply.json";
 import fa2MintableJson from "../assets/FA2MintableSupply.json";
-import fa2FixedNotPausableJson from "../assets/FA2FixedSupplyNotPousable.json";
-import fa2MintableNotPausableJson from "../assets/FA2MintableSupplyNotPousable.json";
+import fa2FixedNotPausableJson from "../assets/FA2FixedSupplyNotPausable.json";
+import fa2MintableNotPausableJson from "../assets/FA2MintableSupplyNotPausable.json";
 import { BigNumber } from "bignumber.js";
 import ipfsClient from "ipfs-http-client";
 
