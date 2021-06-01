@@ -30,7 +30,7 @@ const handleDeploy = async (
         name: tokenName,
         authors: ["FA2 Bakery"],
         source: {
-          tools: ["Ligo dev-20201031", "Flextesa 20200921"],
+          tools: ["Ligo 0.17", "Flextesa 20200921"],
           location: "https://ligolang.org/",
         },
         interfaces: ["TZIP-012", "TZIP-016"],
