@@ -37,6 +37,9 @@ let single_asset_main
 
   | Tokens p ->
     let u1 = fail_if_not_admin s.admin in
+#if FA2_FIXED_SUPPLY
+    let u3 = fail_if_fixed_supply unit in
+#endif
 
     let ops, assets = token_manager (p, s.assets) in 
     let new_s = { s with assets = assets; } in 

@@ -46,6 +46,12 @@ let fail_if_not_admin (a : simple_admin_storage) : unit =
   then failwith "NOT_AN_ADMIN"
   else unit
 
+let fail_if_fixed_supply (u : unit) : unit =
+  failwith "FIXED_SUPPLY"
+
+let fail_if_not_pausable (u : unit) : unit =
+  failwith "NOT_PAUSABLE"
+
 let fail_if_paused (a : simple_admin_storage) : unit =
   if a.paused
   then failwith "PAUSED"
@@ -65,6 +71,9 @@ let simple_admin (param, s : simple_admin * simple_admin_storage)
 
   | Pause paused ->
     let u = fail_if_not_admin s in
+#if NOT_PAUSABLE
+    let u1 = fail_if_not_pausable unit in
+#endif
     let new_s = pause (paused, s) in
     (([]: operation list), new_s)
 
