@@ -68,3 +68,14 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `yarn build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## Prepare Contracts
+
+Compile the contracts:
+
+```
+ligo compile-contract --michelson-format=json contracts/main/fa2_single_asset_fixed_supply.mligo single_asset_main > src/app/components/assets/FA2FixedSupply.json
+ligo compile-contract --michelson-format=json contracts/main/fa2_single_asset_fixed_supply_not_pausable.mligo single_asset_main > src/app/components/assets/FA2FixedSupplyNotPousable.json
+ligo compile-contract --michelson-format=json contracts/main/fa2_single_asset_mintable.mligo single_asset_main > src/app/components/assets/FA2MintableSupply.json
+ligo compile-contract --michelson-format=json contracts/main/fa2_single_asset_mintable_not_pausable.mligo single_asset_main > src/app/components/assets/FA2MintableSupplyNotPousable.json
+```
