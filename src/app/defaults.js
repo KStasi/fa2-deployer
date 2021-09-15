@@ -23,6 +23,13 @@ export const NETWORKS = [
     rpcBaseURL: "https://florencenet.smartpy.io/",
   },
   {
+    id: "granadanet",
+    nextNetworkIndex: 4,
+    name: "Granadanet",
+    type: "test",
+    rpcBaseURL: "https://granadanet.smartpy.io/",
+  },
+  {
     id: NetworkType.MAINNET,
     nextNetworkIndex: 0,
     name: "Mainnet",
@@ -31,4 +38,4 @@ export const NETWORKS = [
   },
 ];
 
-export const DEFAULT_NETWORK = NETWORKS[2];
+export const DEFAULT_NETWORK = NETWORKS[3];
