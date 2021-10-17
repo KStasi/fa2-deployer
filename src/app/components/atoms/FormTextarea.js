@@ -1,19 +1,19 @@
 import React from "react";
 
 import "./FormField.css";
-import Form from "react-bootstrap/Form";
+import { TextField } from "@material-ui/core"; //importing material ui component
 
 const FormTextarea = ({ placeholder, onChange }) => {
   return (
-    <>
-      <Form.Control
-        size="lg"
-        as="textarea"
-        onChange={onChange}
-        placeholder={placeholder}
-        className="input-text my-2"
-      />
-    </>
+    <TextField
+      id={label}
+      label={label}
+      variant="outlined"
+      required={!notRequired}
+      type={type}
+      defaultValue={defaultValue ? defaultValue : ""}
+      onChange={onChange}
+    />
   );
 };
 
