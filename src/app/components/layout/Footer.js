@@ -1,26 +1,48 @@
-import React from "react";
+import * as React from "react";
+import PropTypes from "prop-types";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import Link from "@mui/material/Link";
 
-import "./Footer.css";
-import Image from "react-bootstrap/Image";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-
-const Footer = () => {
+function Copyright() {
   return (
-    <Row className="m-0 p-0">
-      <Col className="m-0 p-0">
-        <div className="footer py-5">
-          <a href="https://github.com/KStasi/fa2-deployer">
-            <Image
-              src="https://rajlab.org/icons/github_white.png"
-              roundedCircle
-              className="img-md "
-            />
-          </a>
-        </div>
-      </Col>
-    </Row>
+    <Typography variant="body2" color="text.secondary" align="center">
+      {"Made with 💙 by "}
+      <Link color="inherit" href="https://www.linkedin.com/in/kstasi/">
+        KStasi
+      </Link>
+    </Typography>
   );
-};
+}
+
+function Reference({ title, link }) {
+  return (
+    <Typography
+      variant="subtitle1"
+      align="center"
+      color="text.secondary"
+      component="p"
+    >
+      <Link color="inherit" href={link}>
+        {title}
+      </Link>
+    </Typography>
+  );
+}
+function Footer({ description, title }) {
+  return (
+    <Box component="footer" sx={{ py: 6 }}>
+      <Container maxWidth="lg">
+        <Typography variant="h6" align="center" gutterBottom>
+          Sources
+        </Typography>
+        <Reference title="Smart Contracts" link=""></Reference>
+        <Reference title="Frontend" link=""></Reference>
+        <Copyright />
+      </Container>
+    </Box>
+  );
+}
 
 export default Footer;

@@ -72,18 +72,12 @@ const FormBox = () => {
   return (
     <Paper
       sx={{
-        p: 8,
+        px: 8,
+        py: 5,
         display: "flex",
         flexDirection: "column",
       }}
     >
-      {/* <Grid
-        container
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
-        spacing={3}
-      > */}
       <Stack direction="column" alignItems="center" spacing={2}>
         <FormField
           label="Admin"
@@ -107,26 +101,35 @@ const FormBox = () => {
         <Stack
           direction={{ xs: "column", sm: "row" }}
           spacing={{ xs: 1, sm: 2, md: 4 }}
+          justifyContent="space-between"
+          sx={{ width: "100%" }}
         >
           <MainSelect
             text="Supply Type"
             value="Mintable"
             items={["Mintable", "Fixed"]}
           ></MainSelect>
-          <MainButton color="#343BBF" text="Add Asset"></MainButton>{" "}
+          <MainButton colorType="type3" text="Add Asset"></MainButton>{" "}
         </Stack>
         <Stack
           direction={{ xs: "column", sm: "row" }}
           spacing={{ xs: 1, sm: 2, md: 4 }}
+          justifyContent="space-between"
+          sx={{ width: "100%" }}
         >
           <Box
             sx={{ width: 200, font: "normal normal bold 16px/22px Open Sans" }}
           >
             Asset 0
           </Box>
-          <MainButton color="#343BBF" text="Remove Asset"></MainButton>{" "}
+          <MainButton colorType="type3" text="Remove Asset"></MainButton>{" "}
         </Stack>
-        <Stack direction="row" spacing={2}>
+        <Stack
+          direction="row"
+          spacing={2}
+          justifyContent="space-between"
+          sx={{ width: "100%" }}
+        >
           <FormField
             label="Name"
             onChange={(e) => {}}
@@ -139,7 +142,12 @@ const FormBox = () => {
             // onChange={(e) => setTokenOwner(e.target.value)}
           ></FormField>{" "}
         </Stack>
-        <Stack direction="row" spacing={2}>
+        <Stack
+          direction="row"
+          spacing={2}
+          justifyContent="space-between"
+          sx={{ width: "100%" }}
+        >
           <FormField
             label="Supply"
             onChange={(e) => {}}
@@ -166,7 +174,7 @@ const FormBox = () => {
           minRows="4"
           // onChange={(e) => setTokenOwner(e.target.value)}
         ></FormField>
-        <MainButton color="#FF665A" text="Deploy"></MainButton>
+        <MainButton colorType="type2" text="Deploy"></MainButton>
       </Stack>
     </Paper>
   );

@@ -5,7 +5,15 @@ import InputBase from "@mui/material/InputBase";
 import { styled } from "@mui/material/styles";
 
 const MainInput = styled(TextField)(({ theme }) => ({
-  font: "normal normal bold  Open Sans",
+  "& .MuiInputLabel-root": {
+    ...theme.custom.inputFont,
+  },
+  "& .MuiInputBase-input": {
+    ...theme.custom.inputFont,
+    "&:focus": {
+      ...theme.custom.inputFont,
+    },
+  },
 }));
 
 const FormField = ({
@@ -32,6 +40,7 @@ const FormField = ({
       defaultValue={defaultValue ? defaultValue : ""}
       onChange={onChange}
       size="small"
+      sx={{ width: "100%" }}
     />
   );
 };

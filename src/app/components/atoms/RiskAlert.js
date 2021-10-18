@@ -1,12 +1,9 @@
 import React from "react";
-import { useState } from "react";
 import Paper from "@mui/material/Paper";
 import WarningAmberOutlinedIcon from "@mui/icons-material/WarningAmberOutlined";
 import Stack from "@mui/material/Stack";
 
 const RiskAlert = () => {
-  const [show, setShow] = useState(true);
-
   return (
     <Paper
       sx={{
