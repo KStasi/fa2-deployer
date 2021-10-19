@@ -29,13 +29,6 @@ class LambdaViewSigner {
 const options = {
   name: "FA2 deployer",
   iconUrl: "https://tezostaquito.io/img/favicon.png",
-  eventHandlers: {
-    PERMISSION_REQUEST_SUCCESS: {
-      handler: async (data) => {
-        console.log("permission data:", data);
-      },
-    },
-  },
 };
 
 const Tezos = new TezosToolkit(DEFAULT_NETWORK.rpcBaseURL);
@@ -51,15 +44,14 @@ export const [UseBeaconProvider, useBeacon] = constate(() => {
     await wallet.disconnect();
     await wallet.clearActiveAccount();
     await wallet.requestPermissions({
-      // network: { type: NetworkType.CUSTOM, rpcUrl: currentNetwork.rpcBaseURL },
       network: { type: currentNetwork.id },
-      scopes: [
-        PermissionScope.OPERATION_REQUEST,
-        PermissionScope.SIGN,
-        PermissionScope.THRESHOLD,
-      ],
     });
+    Tezos.setWalletProvider(wallet);
     Tezos.setRpcProvider(currentNetwork.rpcBaseURL);
+    const activeAcc = await wallet.client.getActiveAccount();
+    if (!activeAcc) {
+      throw new Error("Not connected");
+    }
     setUserPkh(await wallet.getPKH());
     setNetwork(currentNetwork);
   }, []);

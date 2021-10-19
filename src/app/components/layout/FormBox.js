@@ -1,22 +1,16 @@
 import React, { useCallback, useState, Fragment } from "react";
-// import DeployButton from "../atoms/DeployButton";
-// import OptionButton from "../atoms/OptionButton";
 import FormField from "../atoms/FormField";
-// import FormTextarea from "../atoms/FormTextarea";
-import { Form, Field } from "react-final-form";
-
 import "./FormBox.css";
 import useBeacon from "../hooks/useBeacon";
 import handleDeploy from "../hooks/handleDeploy";
 import { DEFAULT_NETWORK, NETWORKS } from "../../defaults";
 // import http from "http";
 import Box from "@mui/material/Box";
-// import Toolbar from "@mui/material/Toolbar";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import MainButton from "../atoms/MainButton";
+import AssetsGroup from "./AssetsGroup";
 import MainSelect from "../atoms/MainSelect";
+import HorizontalStack from "../atoms/HorizontalStack";
 import Stack from "@mui/material/Stack";
 
 const checkURL = (url) => {
@@ -24,50 +18,45 @@ const checkURL = (url) => {
 };
 
 const FormBox = () => {
-  const { connect, disconnect, pkh, Tezos, network } = useBeacon();
+  const { pkh } = useBeacon();
 
-  const [tokenName, setTokenName] = useState("");
-  const [tokenSymbol, setTokenSymbol] = useState("");
-  const [tokenSupply, setTokenSupply] = useState("");
-  const [tokenDecimals, setTokenDecimals] = useState("");
-  const [tokenOwner, setTokenOwner] = useState("");
-  const [tokenLogo, setTokenLogo] = useState("");
-  const [img, setImage] = useState("");
-  const [tokenDescription, setTokenDescription] = useState("");
-  const [supplyTypeValue, setSupplyTypeValue] = useState("fixedSupply");
-  const [metadataTypeValue, setMetadataTypeValue] = useState("onChainMetadata");
-  const [pausableTypeValue, setPausableTypeValue] = useState("pausable");
-  const [, setFetching] = useState(false);
+  const [tokensString, setTokens] = useState("[]");
+  const tokens = JSON.parse(tokensString);
+  const [admin, setAdmin] = useState(pkh);
+  const [contractName, setContractName] = useState("");
+  const [contractDescription, setContractDescription] = useState("");
+  // const [supplyTypeValue, setSupplyTypeValue] = useState("fixedSupply");
+  // const [, setFetching] = useState(false);
 
-  const handleClick = useCallback(async () => {
-    await handleDeploy(
-      tokenName,
-      tokenSymbol,
-      tokenSupply,
-      tokenDecimals,
-      tokenOwner || pkh,
-      tokenLogo,
-      tokenDescription,
-      supplyTypeValue,
-      metadataTypeValue,
-      pausableTypeValue,
-      Tezos.wallet,
-      setFetching
-    );
-  }, [
-    setFetching,
-    Tezos.wallet,
-    tokenName,
-    tokenSymbol,
-    tokenSupply,
-    tokenDecimals,
-    tokenOwner,
-    tokenLogo,
-    supplyTypeValue,
-    metadataTypeValue,
-    pausableTypeValue,
-    tokenDescription,
-  ]);
+  // const handleClick = useCallback(async () => {
+  //   await handleDeploy(
+  //     tokenName,
+  //     tokenSymbol,
+  //     tokenSupply,
+  //     tokenDecimals,
+  //     tokenOwner || pkh,
+  //     tokenLogo,
+  //     tokenDescription,
+  //     supplyTypeValue,
+  //     metadataTypeValue,
+  //     pausableTypeValue,
+  //     Tezos.wallet,
+  //     setFetching
+  //   );
+  // }, [
+  //   setFetching,
+  //   Tezos.wallet,
+  //   tokenName,
+  //   tokenSymbol,
+  //   tokenSupply,
+  //   tokenDecimals,
+  //   tokenOwner,
+  //   tokenLogo,
+  //   supplyTypeValue,
+  //   metadataTypeValue,
+  //   pausableTypeValue,
+  //   tokenDescription,
+  // ]);
 
   return (
     <Paper
@@ -81,99 +70,118 @@ const FormBox = () => {
       <Stack direction="column" alignItems="center" spacing={2}>
         <FormField
           label="Admin"
-          defaultValue={pkh}
-          onChange={(e) => {}}
-          // onChange={(e) => setTokenOwner(e.target.value)}
+          onChange={(e) => setAdmin(e.target.value)}
         ></FormField>
         <FormField
           label="Contract name"
-          onChange={(e) => {}}
-          // onChange={(e) => setTokenOwner(e.target.value)}
+          onChange={(e) => setContractName(e.target.value)}
         ></FormField>
         <FormField
           label="Contract description"
           multiline="true"
-          onChange={(e) => {}}
+          onChange={(e) => setContractDescription(e.target.value)}
           maxRows="4"
           minRows="4"
-          // onChange={(e) => setTokenOwner(e.target.value)}
         ></FormField>
-        <Stack
-          direction={{ xs: "column", sm: "row" }}
-          spacing={{ xs: 1, sm: 2, md: 4 }}
-          justifyContent="space-between"
-          sx={{ width: "100%" }}
-        >
+        <HorizontalStack>
           <MainSelect
             text="Supply Type"
-            value="Mintable"
+            defaultValue="Mintable"
             items={["Mintable", "Fixed"]}
           ></MainSelect>
-          <MainButton colorType="type3" text="Add Asset"></MainButton>{" "}
-        </Stack>
-        <Stack
-          direction={{ xs: "column", sm: "row" }}
-          spacing={{ xs: 1, sm: 2, md: 4 }}
-          justifyContent="space-between"
-          sx={{ width: "100%" }}
-        >
-          <Box
-            sx={{ width: 200, font: "normal normal bold 16px/22px Open Sans" }}
-          >
-            Asset 0
-          </Box>
-          <MainButton colorType="type3" text="Remove Asset"></MainButton>{" "}
-        </Stack>
-        <Stack
-          direction="row"
-          spacing={2}
-          justifyContent="space-between"
-          sx={{ width: "100%" }}
-        >
-          <FormField
-            label="Name"
-            onChange={(e) => {}}
-            // onChange={(e) => setTokenOwner(e.target.value)}
-          ></FormField>
-          <FormField
-            label="Symbol"
-            typw="number"
-            onChange={(e) => {}}
-            // onChange={(e) => setTokenOwner(e.target.value)}
-          ></FormField>{" "}
-        </Stack>
-        <Stack
-          direction="row"
-          spacing={2}
-          justifyContent="space-between"
-          sx={{ width: "100%" }}
-        >
-          <FormField
-            label="Supply"
-            onChange={(e) => {}}
-            // onChange={(e) => setTokenOwner(e.target.value)}
-          ></FormField>
-          <FormField
-            label="Decimals"
-            typw="number"
-            onChange={(e) => {}}
-            // onChange={(e) => setTokenOwner(e.target.value)}
-          ></FormField>
-        </Stack>
-        <FormField
-          label="Icon"
-          typw="text"
-          onChange={(e) => {}}
-          // onChange={(e) => setTokenOwner(e.target.value)}
-        ></FormField>
-        <FormField
-          label="Description"
-          multiline="true"
-          onChange={(e) => {}}
-          maxRows="4"
-          minRows="4"
-          // onChange={(e) => setTokenOwner(e.target.value)}
-        ></FormField>
+          <MainButton
+            colorType="type3"
+            text="Add Asset"
+            onClick={() =>
+              setTokens(
+                JSON.stringify(
+                  tokens.concat({
+                    name: "",
+                    symbol: "",
+                    decimals: "",
+                    supply: "",
+                    description: "",
+                    icon: "",
+                  })
+                )
+              )
+            }
+          ></MainButton>{" "}
+        </HorizontalStack>
+        {tokens.map((tokenInfo, index) => (
+          <React.Fragment key={index}>
+            <HorizontalStack>
+              <Box
+                sx={{
+                  width: 200,
+                  font: "normal normal bold 16px/22px Open Sans",
+                }}
+              >
+                Asset {index}
+              </Box>
+              <MainButton
+                colorType="type3"
+                text="Remove Asset"
+                onClick={() => {
+                  tokens.splice(index, 1);
+                  setTokens(JSON.stringify(tokens));
+                }}
+              ></MainButton>{" "}
+            </HorizontalStack>
+            <HorizontalStack>
+              <FormField
+                label="Name"
+                onChange={(e) => {
+                  tokens[index].name = e.target.value;
+                  setTokens(JSON.stringify(tokens));
+                }}
+              ></FormField>
+              <FormField
+                label="Symbol"
+                onChange={(e) => {
+                  tokens[index].symbol = e.target.value;
+                  setTokens(JSON.stringify(tokens));
+                }}
+              ></FormField>
+            </HorizontalStack>
+            <HorizontalStack>
+              <FormField
+                label="Supply"
+                type="number"
+                onChange={(e) => {
+                  tokens[index].suply = e.target.value;
+                  setTokens(JSON.stringify(tokens));
+                }}
+              ></FormField>
+              <FormField
+                label="Decimals"
+                typw="number"
+                onChange={(e) => {
+                  tokens[index].decimals = e.target.value;
+                  setTokens(JSON.stringify(tokens));
+                }}
+              ></FormField>
+            </HorizontalStack>
+            <FormField
+              label="Icon"
+              type="text"
+              onChange={(e) => {
+                tokens[index].icon = e.target.value;
+                setTokens(JSON.stringify(tokens));
+              }}
+            ></FormField>
+            <FormField
+              label="Description"
+              multiline="true"
+              maxRows="4"
+              minRows="4"
+              onChange={(e) => {
+                tokens[index].description = e.target.value;
+                setTokens(JSON.stringify(tokens));
+              }}
+            ></FormField>
+          </React.Fragment>
+        ))}
         <MainButton colorType="type2" text="Deploy"></MainButton>
       </Stack>
     </Paper>

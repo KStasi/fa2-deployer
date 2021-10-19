@@ -1,5 +1,3 @@
-import * as React from "react";
-import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
@@ -34,9 +32,6 @@ function Footer({ description, title }) {
   return (
     <Box component="footer" sx={{ py: 6 }}>
       <Container maxWidth="lg">
-        <Typography variant="h6" align="center" gutterBottom>
-          Sources
-        </Typography>
         <Reference title="Smart Contracts" link=""></Reference>
         <Reference title="Frontend" link=""></Reference>
         <Copyright />

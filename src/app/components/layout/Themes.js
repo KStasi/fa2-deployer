@@ -9,7 +9,7 @@ export const defaultTheme = createTheme({
       },
       type2: {
         default: "#FF665A",
-        secondary: "",
+        secondary: "#F55A50",
       },
       type3: {
         default: "#343BBF",

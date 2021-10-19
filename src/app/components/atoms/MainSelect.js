@@ -9,19 +9,25 @@ import Select from "@mui/material/Select";
 import NativeSelect from "@mui/material/NativeSelect";
 import InputBase from "@mui/material/InputBase";
 
-const MainInput = styled(InputBase)(({ theme }) => ({
+const MainInput = styled(InputBase)(({ theme, colorType }) => ({
   ...theme.custom.secondaryFont,
-  background: `${theme.custom.color["type1"].default} 0% 0% no-repeat padding-box`,
+  background: `${theme.custom.color[colorType].default} 0% 0% no-repeat padding-box`,
   ...theme.custom.box,
   "&:hover": {
-    "background-color": theme.custom.color["type1"].secondary,
+    "background-color": theme.custom.color[colorType].secondary,
   },
   "& .MuiInputBase-input": {
     ...theme.custom.secondaryFont,
     padding: "0 30px",
-    background: `${theme.custom.color["type1"].default} 0% 0% no-repeat padding-box`,
+    background: `${theme.custom.color[colorType].default} 0% 0% no-repeat padding-box`,
     "&:hover": {
-      "background-color": theme.custom.color["type1"].secondary,
+      "background-color": theme.custom.color[colorType].secondary,
+    },
+  },
+  "& .MuiSvgIcon-root": {
+    ...theme.custom.secondaryFont,
+    "&:hover": {
+      ...theme.custom.secondaryFont,
     },
   },
 }));
@@ -38,16 +44,17 @@ const MainSelect = ({
   checked,
   value,
   items,
+  colorType,
 }) => {
-  const theme = useTheme();
+  colorType = colorType || "type1";
 
   return (
     <Select
       displayEmpty
       defaultValue={defaultValue}
       id={text}
-      value={value}
       onChange={onChange}
+      colorType={colorType}
       input={<MainInput />}
     >
       {items.map((item) => {
