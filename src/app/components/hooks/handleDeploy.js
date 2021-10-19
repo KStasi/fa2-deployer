@@ -1,102 +1,69 @@
 import { MichelsonMap } from "@taquito/michelson-encoder";
 
-import fa2FixedJson from "../assets/FA2FixedSupply.json";
-import fa2MintableJson from "../assets/FA2MintableSupply.json";
-import fa2FixedNotPausableJson from "../assets/FA2FixedSupplyNotPousable.json";
-import fa2MintableNotPausableJson from "../assets/FA2MintableSupplyNotPousable.json";
+import fa2MultiAsset from "../assets/MultiAsset.json";
 import { BigNumber } from "bignumber.js";
-import ipfsClient from "ipfs-http-client";
 
 const handleDeploy = async (
-  tokenName,
-  tokenSymbol,
-  tokenSupply,
-  tokenDecimals,
-  tokenOwner,
-  tokenLogo,
-  tokenDescription,
-  supplyTypeValue,
-  metadataTypeValue,
-  pausableTypeValue,
+  admin,
+  contractName,
+  contractDescription,
+  tokensString,
   wallet,
   setFetching
 ) => {
   setFetching(true);
   try {
-    const tokenSupplyUnits = tokenSupply * new BigNumber(10).pow(tokenDecimals);
-    let metadata = new Buffer(
-      JSON.stringify({
-        version: "v0.0.1",
-        name: tokenName,
-        authors: ["FA2 Bakery"],
-        source: {
-          tools: ["Ligo dev-20201031", "Flextesa 20200921"],
-          location: "https://ligolang.org/",
-        },
-        interfaces: ["TZIP-012", "TZIP-016"],
-        errors: [],
-        views: [],
-      }),
-      "ascii"
-    );
-    if (metadataTypeValue == "offChainMetadata") {
-      const ipfs = ipfsClient("https://ipfs.infura.io:5001/api/v0/");
-      const result = await ipfs.add([metadata]);
-      metadata = MichelsonMap.fromLiteral({
-        "": Buffer("ipfs://" + result.path, "ascii").toString("hex"),
-      });
-    } else {
-      metadata = MichelsonMap.fromLiteral({
-        "": Buffer("tezos-storage:contents", "ascii").toString("hex"),
-        contents: metadata.toString("hex"),
-      });
-    }
-
+    const tokens = JSON.parse(tokensString);
+    let metadata = MichelsonMap.fromLiteral({
+      "": Buffer("tezos-storage:contents", "ascii").toString("hex"),
+      contents: Buffer(
+        JSON.stringify({
+          version: "v0.0.1",
+          name: contractName,
+          description: contractDescription,
+          authors: ["FA2 Bakery"],
+          source: {
+            tools: ["Ligo"],
+          },
+          interfaces: ["TZIP-012", "TZIP-016"],
+        }),
+        "ascii"
+      ).toString("hex"),
+    });
     const storage = {
       admin: {
-        admin: tokenOwner,
+        admin: admin,
         pending_admin: null,
         paused: false,
       },
       assets: {
-        total_supply: tokenSupplyUnits,
-        ledger: MichelsonMap.fromLiteral({
-          [tokenOwner]: tokenSupplyUnits,
-        }),
+        token_total_supply: MichelsonMap.fromLiteral({}),
+        ledger: MichelsonMap.fromLiteral({}),
         operators: MichelsonMap.fromLiteral({}),
-        token_metadata: MichelsonMap.fromLiteral({
-          0: {
-            token_id: 0,
-            token_info: MichelsonMap.fromLiteral({
-              symbol: Buffer(tokenSymbol, "ascii").toString("hex"),
-              name: Buffer(tokenName, "ascii").toString("hex"),
-              decimals: Buffer(tokenDecimals, "ascii").toString("hex"),
-              shouldPreferSymbol: Buffer("true", "ascii").toString("hex"),
-
-              ...(tokenDescription && {
-                description: Buffer(tokenDescription, "ascii").toString("hex"),
-              }),
-              ...(tokenLogo && {
-                thumbnailUri: Buffer(tokenLogo, "ascii").toString("hex"),
-              }),
-            }),
-          },
-        }),
+        token_metadata: MichelsonMap.fromLiteral({}),
       },
       metadata: metadata,
-      total_supply: tokenSupplyUnits,
     };
-
+    tokens.forEach((token, index) => {
+      const tokenSupply = token.supply * new BigNumber(10).pow(token.decimals);
+      storage.assets.token_total_supply.set(index, tokenSupply);
+      storage.assets.ledger.set([admin, index], tokenSupply);
+      storage.assets.token_metadata.set(index, {
+        token_id: index,
+        token_info: MichelsonMap.fromLiteral({
+          symbol: Buffer(token.symbol, "ascii").toString("hex"),
+          name: Buffer(token.name, "ascii").toString("hex"),
+          decimals: Buffer(token.decimals, "ascii").toString("hex"),
+          shouldPreferSymbol: Buffer("true", "ascii").toString("hex"),
+          description: Buffer(token.description, "ascii").toString("hex"),
+          thumbnailUri: Buffer(token.icon, "ascii").toString("hex"),
+        }),
+      });
+    });
+    console.log(fa2MultiAsset);
     await wallet
       .originate({
-        code:
-          supplyTypeValue == "fixedSupply"
-            ? pausableTypeValue == "pausable"
-              ? fa2FixedJson
-              : fa2FixedNotPausableJson
-            : pausableTypeValue == "pausable"
-            ? fa2MintableJson
-            : fa2MintableNotPausableJson,
+        code: fa2MultiAsset,
         storage,
       })
       .send();

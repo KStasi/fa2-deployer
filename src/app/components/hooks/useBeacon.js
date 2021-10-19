@@ -38,7 +38,6 @@ Tezos.setSignerProvider(new LambdaViewSigner());
 
 export const [UseBeaconProvider, useBeacon] = constate(() => {
   const [pkh, setUserPkh] = useState();
-  const [network, setNetwork] = useState(DEFAULT_NETWORK);
 
   const connect = useCallback(async (currentNetwork) => {
     await wallet.disconnect();
@@ -53,7 +52,6 @@ export const [UseBeaconProvider, useBeacon] = constate(() => {
       throw new Error("Not connected");
     }
     setUserPkh(await wallet.getPKH());
-    setNetwork(currentNetwork);
   }, []);
 
   const disconnect = useCallback(async () => {
@@ -61,7 +59,6 @@ export const [UseBeaconProvider, useBeacon] = constate(() => {
     await wallet.clearActiveAccount();
     Tezos.setWalletProvider(wallet);
     setUserPkh(undefined);
-    setNetwork(DEFAULT_NETWORK);
   }, []);
 
   return {
@@ -71,7 +68,6 @@ export const [UseBeaconProvider, useBeacon] = constate(() => {
     Tezos,
     wallet,
     pkh,
-    network,
   };
 });
 

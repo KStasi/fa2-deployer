@@ -9,7 +9,7 @@ import { useState } from "react";
 
 const ButtonGroup = () => {
   const { connect, disconnect, pkh, Tezos } = useBeacon();
-  const [network, setNetwork] = useState(DEFAULT_NETWORK.name);
+  const [network, setNetwork] = useState(DEFAULT_NETWORK);
 
   return (
     <Stack direction="column" alignItems="center" spacing={2}>
@@ -34,7 +34,13 @@ const ButtonGroup = () => {
         text="Network"
         defaultValue={DEFAULT_NETWORK.name}
         items={NETWORKS.map((item) => item.name)}
-        onChange={(e) => setNetwork(e.target.value)}
+        onChange={(e) => {
+          setNetwork(
+            NETWORKS.find((element) => element.name == e.target.value)
+          );
+          console.log(e.target.value);
+          disconnect().catch(console.log);
+        }}
       ></MainSelect>
     </Stack>
   );

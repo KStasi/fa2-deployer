@@ -18,7 +18,7 @@ const checkURL = (url) => {
 };
 
 const FormBox = () => {
-  const { pkh } = useBeacon();
+  const { pkh, Tezos } = useBeacon();
 
   const [tokensString, setTokens] = useState("[]");
   const tokens = JSON.parse(tokensString);
@@ -26,37 +26,25 @@ const FormBox = () => {
   const [contractName, setContractName] = useState("");
   const [contractDescription, setContractDescription] = useState("");
   // const [supplyTypeValue, setSupplyTypeValue] = useState("fixedSupply");
-  // const [, setFetching] = useState(false);
+  const [, setFetching] = useState(false);
 
-  // const handleClick = useCallback(async () => {
-  //   await handleDeploy(
-  //     tokenName,
-  //     tokenSymbol,
-  //     tokenSupply,
-  //     tokenDecimals,
-  //     tokenOwner || pkh,
-  //     tokenLogo,
-  //     tokenDescription,
-  //     supplyTypeValue,
-  //     metadataTypeValue,
-  //     pausableTypeValue,
-  //     Tezos.wallet,
-  //     setFetching
-  //   );
-  // }, [
-  //   setFetching,
-  //   Tezos.wallet,
-  //   tokenName,
-  //   tokenSymbol,
-  //   tokenSupply,
-  //   tokenDecimals,
-  //   tokenOwner,
-  //   tokenLogo,
-  //   supplyTypeValue,
-  //   metadataTypeValue,
-  //   pausableTypeValue,
-  //   tokenDescription,
-  // ]);
+  const handleClick = useCallback(async () => {
+    await handleDeploy(
+      admin,
+      contractName,
+      contractDescription,
+      tokensString,
+      Tezos.wallet,
+      setFetching
+    );
+  }, [
+    setFetching,
+    Tezos.wallet,
+    tokensString,
+    admin,
+    contractName,
+    contractDescription,
+  ]);
 
   return (
     <Paper
@@ -182,7 +170,11 @@ const FormBox = () => {
             ></FormField>
           </React.Fragment>
         ))}
-        <MainButton colorType="type2" text="Deploy"></MainButton>
+        <MainButton
+          colorType="type2"
+          text="Deploy"
+          onClick={handleClick}
+        ></MainButton>
       </Stack>
     </Paper>
   );
