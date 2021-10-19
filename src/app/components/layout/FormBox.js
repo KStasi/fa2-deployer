@@ -25,7 +25,7 @@ const FormBox = () => {
   const [admin, setAdmin] = useState(pkh);
   const [contractName, setContractName] = useState("");
   const [contractDescription, setContractDescription] = useState("");
-  // const [supplyTypeValue, setSupplyTypeValue] = useState("fixedSupply");
+  const [tokenType, setTokenType] = useState("Basic");
   const [, setFetching] = useState(false);
 
   const handleClick = useCallback(async () => {
@@ -34,6 +34,7 @@ const FormBox = () => {
       contractName,
       contractDescription,
       tokensString,
+      tokenType,
       Tezos.wallet,
       setFetching
     );
@@ -44,6 +45,8 @@ const FormBox = () => {
     admin,
     contractName,
     contractDescription,
+    tokenType,
+    setTokenType,
   ]);
 
   return (
@@ -74,8 +77,9 @@ const FormBox = () => {
         <HorizontalStack>
           <MainSelect
             text="Supply Type"
-            defaultValue="Mintable"
-            items={["Mintable", "Fixed"]}
+            defaultValue={tokenType}
+            onChange={(e) => setTokenType(e.target.value)}
+            items={["Basic", "Granular"]}
           ></MainSelect>
           <MainButton
             colorType="type3"

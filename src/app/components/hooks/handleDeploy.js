@@ -1,6 +1,7 @@
 import { MichelsonMap } from "@taquito/michelson-encoder";
 
 import fa2MultiAsset from "../assets/MultiAsset.json";
+import fa2GranularMultiAsset from "../assets/GranularMultiAsset.json";
 import { BigNumber } from "bignumber.js";
 
 const handleDeploy = async (
@@ -8,6 +9,7 @@ const handleDeploy = async (
   contractName,
   contractDescription,
   tokensString,
+  type,
   wallet,
   setFetching
 ) => {
@@ -34,7 +36,7 @@ const handleDeploy = async (
       admin: {
         admin: admin,
         pending_admin: null,
-        paused: false,
+        paused: type == "Basic" ? false : MichelsonMap.fromLiteral({}),
       },
       assets: {
         token_total_supply: MichelsonMap.fromLiteral({}),
@@ -46,6 +48,7 @@ const handleDeploy = async (
     };
     tokens.forEach((token, index) => {
       const tokenSupply = token.supply * new BigNumber(10).pow(token.decimals);
+      if (type != "Basic") storage.admin.paused.set(index, false);
       storage.assets.token_total_supply.set(index, tokenSupply);
       storage.assets.ledger.set([admin, index], tokenSupply);
       storage.assets.token_metadata.set(index, {
@@ -63,7 +66,7 @@ const handleDeploy = async (
     console.log(fa2MultiAsset);
     await wallet
       .originate({
-        code: fa2MultiAsset,
+        code: type == "Basic" ? fa2MultiAsset : fa2GranularMultiAsset,
         storage,
       })
       .send();

@@ -35,7 +35,7 @@ export const defaultTheme = createTheme({
       font: "normal normal normal 14px/18px Open Sans",
       "letter-spacing": "-0.16px",
       "text-transform": "none",
-      "text-align": "center",
+      "text-align": "left",
     },
     box: {
       "box-shadow": "4px 8px 20px #1F1F1F1A",
