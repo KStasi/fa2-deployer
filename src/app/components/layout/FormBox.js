@@ -17,6 +17,26 @@ const checkURL = (url) => {
   return url && url.match(/\.(jpeg|jpg|gif|png)$/) != null;
 };
 
+const validateInput = (
+  admin,
+  contractName,
+  contractDescription,
+  tokensString
+) => {
+  if (
+    [admin, contractName, contractDescription].some(
+      (str) => !str || str.trim() == ""
+    )
+  )
+    return false;
+  if (
+    tokensString.some((token) =>
+      Object.values(token).some((str) => !str || str.trim() == "")
+    )
+  )
+    return false;
+  return true;
+};
 const FormBox = () => {
   const { pkh, Tezos } = useBeacon();
 
@@ -29,15 +49,17 @@ const FormBox = () => {
   const [, setFetching] = useState(false);
 
   const handleClick = useCallback(async () => {
-    await handleDeploy(
-      admin,
-      contractName,
-      contractDescription,
-      tokensString,
-      tokenType,
-      Tezos.wallet,
-      setFetching
-    );
+    if (validateInput(admin, contractName, contractDescription, tokens)) {
+      await handleDeploy(
+        admin,
+        contractName,
+        contractDescription,
+        tokensString,
+        tokenType,
+        Tezos.wallet,
+        setFetching
+      );
+    }
   }, [
     setFetching,
     Tezos.wallet,
@@ -48,9 +70,12 @@ const FormBox = () => {
     tokenType,
     setTokenType,
   ]);
-
   return (
     <Paper
+      component="form"
+      onSubmit={(event) => {
+        event.preventDefault();
+      }}
       sx={{
         px: 8,
         py: 5,
@@ -175,9 +200,11 @@ const FormBox = () => {
           </React.Fragment>
         ))}
         <MainButton
+          type="submit"
           colorType="type2"
           text="Deploy"
           onClick={handleClick}
+          disabled={!pkh}
         ></MainButton>
       </Stack>
     </Paper>

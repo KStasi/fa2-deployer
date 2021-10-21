@@ -20,9 +20,11 @@ const ColorButton = styled(Button)(({ theme, colorType }) => ({
 
 const MainButton = ({ onClick, text, type, disabled, colorType }) => {
   colorType = colorType || "type1";
+  type = type || "button";
 
   return (
     <ColorButton
+      type={type}
       colorType={colorType}
       disabled={disabled}
       onClick={onClick}

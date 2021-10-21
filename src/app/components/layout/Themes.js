@@ -5,15 +5,16 @@ export const defaultTheme = createTheme({
     color: {
       type1: {
         default: "#4973F2",
-        secondary: "#4165E1",
+        secondary: "#668CFF",
       },
       type2: {
-        default: "#FF665A",
-        secondary: "#F55A50",
+        // default: "#F27E61",
+        default: "#5226BF",
+        secondary: "#8255F2",
       },
       type3: {
-        default: "#343BBF",
-        secondary: "#393FC4",
+        secondary: "#3655B3",
+        default: "#223773",
       },
       background: "#f2f4f3",
     },

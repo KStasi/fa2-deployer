@@ -39,6 +39,7 @@ const FormField = ({
       minRows={minRows}
       defaultValue={defaultValue ? defaultValue : ""}
       onChange={onChange}
+      autoFocus
       size="small"
       sx={{ width: "100%" }}
     />
