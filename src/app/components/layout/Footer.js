@@ -7,11 +7,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
       {"Made with 💙 by "}
-      <Link
-        color="inherit"
-        href="https://www.linkedin.com/in/kstasi/"
-        target="_blank"
-      >
+      <Link color="inherit" href="https://twitter.com/KStasii/" target="_blank">
         KStasi
       </Link>
     </Typography>

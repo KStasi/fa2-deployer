@@ -16,6 +16,10 @@
     "description": "You can make the admin functions unreachable by setting zero address(ex. tz1ZZZZZZZZZZZZZZZZZZZZZZZZZZZZNkiRg) as an admin."
   },
   {
+    "topic": "What are the decimals?",
+    "description": "That is the unit used for display to users. In simple terms, it is the max number of places after the dot in the token's amount representation. For example, $ has 2 decimals because the smallest ammount that can be represented is a cent - $0.01. Bitcoin has decimals 8, i.e. the smalles unit of the BTC is 0.00000001 BTC or 1 satoshi."
+  },
+  {
     "topic": "Is the project open-sourced?",
     "description": "Sure, the source code of smart contracts can be found here: https://github.com/oxheadalpha/smart-contracts.\n The frontend is located here: https://github.com/KStasi/fa2-deployer."
   },
