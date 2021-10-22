@@ -1,7 +1,6 @@
 import React from "react";
 
-import { TextField } from "@material-ui/core"; //importing material ui component
-import InputBase from "@mui/material/InputBase";
+import { TextField } from "@material-ui/core";
 import { styled } from "@mui/material/styles";
 
 const MainInput = styled(TextField)(({ theme }) => ({

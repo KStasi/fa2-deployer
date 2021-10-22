@@ -1,20 +1,13 @@
-import React, { useCallback, useState, Fragment } from "react";
+import React, { useCallback, useState } from "react";
 import FormField from "../atoms/FormField";
-import "./FormBox.css";
 import useBeacon from "../hooks/useBeacon";
 import handleDeploy from "../hooks/handleDeploy";
-import { DEFAULT_NETWORK, NETWORKS } from "../../defaults";
-// import http from "http";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import MainButton from "../atoms/MainButton";
 import MainSelect from "../atoms/MainSelect";
 import HorizontalStack from "../atoms/HorizontalStack";
 import Stack from "@mui/material/Stack";
-
-const checkURL = (url) => {
-  return url && url.match(/\.(jpeg|jpg|gif|png)$/) != null;
-};
 
 const validateInput = (
   admin,
@@ -29,9 +22,9 @@ const validateInput = (
   )
     return false;
   if (
-    tokensString.some((token) =>
-      Object.values(token).some((str) => !str || str.trim() == "")
-    )
+    tokensString.some((token) => {
+      return Object.values(token).some((str) => !str || str.trim() == "");
+    })
   )
     return false;
   return true;
@@ -67,7 +60,7 @@ const FormBox = () => {
     contractName,
     contractDescription,
     tokenType,
-    setTokenType,
+    tokens,
   ]);
   return (
     <Paper
@@ -165,13 +158,13 @@ const FormBox = () => {
                 label="Supply"
                 type="number"
                 onChange={(e) => {
-                  tokens[index].suply = e.target.value;
+                  tokens[index].supply = e.target.value;
                   setTokens(JSON.stringify(tokens));
                 }}
               ></FormField>
               <FormField
                 label="Decimals"
-                typw="number"
+                type="number"
                 onChange={(e) => {
                   tokens[index].decimals = e.target.value;
                   setTokens(JSON.stringify(tokens));

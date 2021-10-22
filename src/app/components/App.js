@@ -1,6 +1,6 @@
 import React from "react";
 
-import { UseBeaconProvider, useBeacon } from "./hooks/useBeacon";
+import { UseBeaconProvider } from "./hooks/useBeacon";
 import FormBox from "./layout/FormBox";
 import Footer from "./layout/Footer";
 import Faq from "./layout/Faq";
@@ -9,7 +9,6 @@ import { defaultTheme } from "./layout/Themes";
 import RiskAlert from "./atoms/RiskAlert";
 import { ThemeProvider } from "@mui/material/styles";
 
-import "./App.css";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";

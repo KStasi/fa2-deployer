@@ -1,10 +1,7 @@
 import React from "react";
-import Paper from "@mui/material/Paper";
-import WarningAmberOutlinedIcon from "@mui/icons-material/WarningAmberOutlined";
-import Stack from "@mui/material/Stack";
 
 import Alert from "@mui/material/Alert";
-import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 
 const ColoredAllert = styled(Alert)(({ theme, colorType }) => ({
   ...theme.custom.secondaryFont,

@@ -1,12 +1,7 @@
 import React from "react";
-import { useState } from "react";
-import Button from "@mui/material/Button";
-import { styled, useTheme } from "@mui/material/styles";
-import InputLabel from "@mui/material/InputLabel";
+import { styled } from "@mui/material/styles";
 import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import NativeSelect from "@mui/material/NativeSelect";
 import InputBase from "@mui/material/InputBase";
 
 const MainInput = styled(InputBase)(({ theme, colorType }) => ({
@@ -36,16 +31,7 @@ const StyledItem = styled(MenuItem)(({ theme }) => ({
   ...theme.custom.inputFont,
 }));
 
-const MainSelect = ({
-  onChange,
-  defaultValue,
-  text,
-  className,
-  checked,
-  value,
-  items,
-  colorType,
-}) => {
+const MainSelect = ({ onChange, defaultValue, text, items, colorType }) => {
   colorType = colorType || "type1";
 
   return (

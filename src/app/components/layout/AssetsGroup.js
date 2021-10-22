@@ -34,7 +34,6 @@ const AssetsGroup = ({ tokens, setTokens, handleRemove }) => {
             ></FormField>
             <FormField
               label="Symbol"
-              type="number"
               onChange={(e) => {
                 tokens[index].symbol = e.target.value;
                 setTokens(tokens);
@@ -44,14 +43,15 @@ const AssetsGroup = ({ tokens, setTokens, handleRemove }) => {
           <HorizontalStack>
             <FormField
               label="Supply"
+              type="number"
               onChange={(e) => {
-                tokens[index].suply = e.target.value;
+                tokens[index].supply = e.target.value;
                 setTokens(tokens);
               }}
             ></FormField>
             <FormField
               label="Decimals"
-              typw="number"
+              type="number"
               onChange={(e) => {
                 tokens[index].decimals = e.target.value;
                 setTokens(tokens);
@@ -60,7 +60,6 @@ const AssetsGroup = ({ tokens, setTokens, handleRemove }) => {
           </HorizontalStack>
           <FormField
             label="Icon"
-            type="text"
             onChange={(e) => {
               tokens[index].icon = e.target.value;
               setTokens(tokens);

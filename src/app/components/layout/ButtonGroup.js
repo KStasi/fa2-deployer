@@ -8,7 +8,7 @@ import { DEFAULT_NETWORK, NETWORKS } from "../../defaults";
 import { useState } from "react";
 
 const ButtonGroup = () => {
-  const { connect, disconnect, pkh, Tezos } = useBeacon();
+  const { connect, disconnect, pkh } = useBeacon();
   const [network, setNetwork] = useState(DEFAULT_NETWORK);
 
   return (

@@ -1,7 +1,6 @@
 import React from "react";
-import { useState } from "react";
 import Button from "@mui/material/Button";
-import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 
 const ColorButton = styled(Button)(({ theme, colorType }) => ({
   ...theme.custom.secondaryFont,
