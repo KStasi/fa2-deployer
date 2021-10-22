@@ -1,277 +1,205 @@
 import React, { useCallback, useState } from "react";
-import DeployButton from "../atoms/DeployButton";
-import OptionButton from "../atoms/OptionButton";
 import FormField from "../atoms/FormField";
-import FormTextarea from "../atoms/FormTextarea";
-import LogoImg from "../atoms/LogoImg";
-import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
-import "./FormBox.css";
 import useBeacon from "../hooks/useBeacon";
 import handleDeploy from "../hooks/handleDeploy";
-import { DEFAULT_NETWORK, NETWORKS } from "../../defaults";
-import http from "http";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import MainButton from "../atoms/MainButton";
+import MainSelect from "../atoms/MainSelect";
+import HorizontalStack from "../atoms/HorizontalStack";
+import Stack from "@mui/material/Stack";
 
-const checkURL = (url) => {
-  return url && url.match(/\.(jpeg|jpg|gif|png)$/) != null;
+const validateInput = (
+  admin,
+  contractName,
+  contractDescription,
+  tokensString
+) => {
+  if (
+    [admin, contractName, contractDescription].some(
+      (str) => !str || str.trim() == ""
+    )
+  )
+    return false;
+  if (
+    tokensString.some((token) => {
+      return Object.values(token).some((str) => !str || str.trim() == "");
+    })
+  )
+    return false;
+  return true;
 };
-
 const FormBox = () => {
-  const { connect, disconnect, pkh, Tezos, network } = useBeacon();
+  const { pkh, Tezos } = useBeacon();
 
-  const [tokenName, setTokenName] = useState("");
-  const [tokenSymbol, setTokenSymbol] = useState("");
-  const [tokenSupply, setTokenSupply] = useState("");
-  const [tokenDecimals, setTokenDecimals] = useState("");
-  const [tokenOwner, setTokenOwner] = useState("");
-  const [tokenLogo, setTokenLogo] = useState("");
-  const [img, setImage] = useState("");
-  const [tokenDescription, setTokenDescription] = useState("");
-  const [supplyTypeValue, setSupplyTypeValue] = useState("fixedSupply");
-  const [metadataTypeValue, setMetadataTypeValue] = useState("onChainMetadata");
-  const [pausableTypeValue, setPausableTypeValue] = useState("pausable");
+  const [tokensString, setTokens] = useState("[]");
+  const tokens = JSON.parse(tokensString);
+  const [admin, setAdmin] = useState(pkh);
+  const [contractName, setContractName] = useState("");
+  const [contractDescription, setContractDescription] = useState("");
+  const [tokenType, setTokenType] = useState("Basic");
   const [, setFetching] = useState(false);
 
   const handleClick = useCallback(async () => {
-    await handleDeploy(
-      tokenName,
-      tokenSymbol,
-      tokenSupply,
-      tokenDecimals,
-      tokenOwner || pkh,
-      tokenLogo,
-      tokenDescription,
-      supplyTypeValue,
-      metadataTypeValue,
-      pausableTypeValue,
-      Tezos.wallet,
-      setFetching
-    );
+    if (validateInput(admin, contractName, contractDescription, tokens)) {
+      await handleDeploy(
+        admin,
+        contractName,
+        contractDescription,
+        tokensString,
+        tokenType,
+        Tezos.wallet,
+        setFetching
+      );
+    }
   }, [
     setFetching,
     Tezos.wallet,
-    tokenName,
-    tokenSymbol,
-    tokenSupply,
-    tokenDecimals,
-    tokenOwner,
-    tokenLogo,
-    supplyTypeValue,
-    metadataTypeValue,
-    pausableTypeValue,
-    tokenDescription,
+    tokensString,
+    admin,
+    contractName,
+    contractDescription,
+    tokenType,
+    tokens,
   ]);
-
   return (
-    <Row className="m-0 p-0">
-      <Col className="m-0 p-0"></Col>
-      <Col sm={4} className="m-0 p-0">
-        <Form
-          className="FormBox p-3"
-          onSubmit={(event) => {
-            event.preventDefault();
-          }}
-        >
-          <Form.Row>
-            <Col>
-              <LogoImg img={img}></LogoImg>
-              <div className="frm-h1-text m-0 my-3">Tezos Token Factory</div>
-              <div className="frm-h-text m-0 my-3">
-                Deploy your own token in a minute
-              </div>
-            </Col>
-          </Form.Row>
-          <Form.Row>
-            <Col>
-              <Form.Label className="frm-label py-1">Supply type</Form.Label>
-              <ButtonGroup toggle>
-                <OptionButton
-                  checked={supplyTypeValue === "fixedSupply"}
-                  value={"fixedSupply"}
-                  onChange={(e) => setSupplyTypeValue(e.currentTarget.value)}
-                  text={
-                    <>
-                      <div className="o-btn-h1-text">Fixed Supply</div>
-                    </>
-                  }
-                ></OptionButton>
-                <OptionButton
-                  checked={supplyTypeValue === "mintableSupply"}
-                  value={"mintableSupply"}
-                  onChange={(e) => setSupplyTypeValue(e.currentTarget.value)}
-                  text={
-                    <>
-                      <div className="o-btn-h1-text">Mintable</div>
-                    </>
-                  }
-                ></OptionButton>
-              </ButtonGroup>
-            </Col>
-            <Col>
-              <Form.Label className="frm-label py-1">Token type</Form.Label>
-              <ButtonGroup toggle>
-                <OptionButton
-                  checked={pausableTypeValue === "pausable"}
-                  value={"pausable"}
-                  onChange={(e) => setPausableTypeValue(e.currentTarget.value)}
-                  text={
-                    <>
-                      <div className="o-btn-h1-text">Pausable</div>
-                    </>
-                  }
-                ></OptionButton>
-                <OptionButton
-                  checked={pausableTypeValue === "notPausable"}
-                  value={"notPausable"}
-                  onChange={(e) => setPausableTypeValue(e.currentTarget.value)}
-                  text={
-                    <>
-                      <div className="o-btn-h1-text">Not pausable</div>
-                    </>
-                  }
-                ></OptionButton>
-              </ButtonGroup>
-            </Col>
-          </Form.Row>
-          <Form.Row></Form.Row>
-          <Form.Row>
-            <Col>
-              <FormField
-                placeholder="Name (e.q. Dollar)"
-                onChange={(e) => setTokenName(e.target.value)}
-              ></FormField>
-              <FormField
-                placeholder="Symbol (e.q. USD)"
-                onChange={(e) => setTokenSymbol(e.target.value)}
-              ></FormField>
-            </Col>
-            <Col>
-              <FormField
-                type="number"
-                placeholder="Supply (e.q. 1.000.000)"
-                onChange={(e) => setTokenSupply(e.target.value)}
-              ></FormField>
-              <FormField
-                type="number"
-                placeholder="Decimals (e.q. 2)"
-                onChange={(e) => setTokenDecimals(e.target.value)}
-              ></FormField>
-            </Col>
-          </Form.Row>
-          <Form.Row>
-            <Col>
-              <FormField
-                placeholder="Owner (e.q. tz1VSUr...)"
-                defaultValue={pkh}
-                onChange={(e) => setTokenOwner(e.target.value)}
-              ></FormField>
-            </Col>
-          </Form.Row>
-          <Form.Row>
-            <Col>
-              <FormTextarea
-                placeholder="*Description (e.q. This is my first token)"
-                onChange={(e) => {
-                  setTokenDescription(e.target.value);
+    <Paper
+      component="form"
+      onSubmit={(event) => {
+        event.preventDefault();
+      }}
+      sx={{
+        px: 8,
+        py: 5,
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <Stack direction="column" alignItems="center" spacing={2}>
+        <FormField
+          label="Admin"
+          onChange={(e) => setAdmin(e.target.value)}
+        ></FormField>
+        <FormField
+          label="Contract name"
+          onChange={(e) => setContractName(e.target.value)}
+        ></FormField>
+        <FormField
+          label="Contract description"
+          multiline="true"
+          onChange={(e) => setContractDescription(e.target.value)}
+          maxRows="4"
+          minRows="4"
+        ></FormField>
+        <HorizontalStack>
+          <MainSelect
+            text="Supply Type"
+            defaultValue={tokenType}
+            onChange={(e) => setTokenType(e.target.value)}
+            items={["Basic", "Granular"]}
+          ></MainSelect>
+          <MainButton
+            colorType="type3"
+            text="Add Asset"
+            onClick={() =>
+              setTokens(
+                JSON.stringify(
+                  tokens.concat({
+                    name: "",
+                    symbol: "",
+                    decimals: "",
+                    supply: "",
+                    description: "",
+                    icon: "",
+                  })
+                )
+              )
+            }
+          ></MainButton>{" "}
+        </HorizontalStack>
+        {tokens.map((tokenInfo, index) => (
+          <React.Fragment key={index}>
+            <HorizontalStack>
+              <Box
+                sx={{
+                  width: 200,
+                  font: "normal normal bold 16px/22px Open Sans",
                 }}
-              ></FormTextarea>
-            </Col>
-          </Form.Row>
-          <Form.Row>
-            <Col>
+              >
+                Asset {index}
+              </Box>
+              <MainButton
+                colorType="type3"
+                text="Remove Asset"
+                onClick={() => {
+                  tokens.splice(index, 1);
+                  setTokens(JSON.stringify(tokens));
+                }}
+              ></MainButton>{" "}
+            </HorizontalStack>
+            <HorizontalStack>
               <FormField
-                placeholder="*Token's image (https://web.co/logo.png, max - 350x350 px)"
-                notRequired={true}
+                label="Name"
                 onChange={(e) => {
-                  setTokenLogo(e.target.value);
-                  if (checkURL(e.target.value)) {
-                    const req = http.request(e.target.value, function (r) {
-                      if (r.statusCode == 200) setImage(e.target.value);
-                      else setImage(undefined);
-                    });
-                    req.on("error", function (e) {});
-                    req.end();
-                  }
+                  tokens[index].name = e.target.value;
+                  setTokens(JSON.stringify(tokens));
                 }}
               ></FormField>
-            </Col>
-          </Form.Row>
-          <Form.Row>
-            <Col>
-              <div className="o-btn-h1-text m-0 px-2 py-2 text-left">
-                * Optional fields
-              </div>
-            </Col>
-          </Form.Row>
-          <DeployButton
-            type="submit"
-            onClick={handleClick}
-            disabled={!pkh}
-            text={
-              <>
-                <div className="d-btn-h1-text">Deploy</div>
-                <div className="d-btn-h2-text">with Wallet</div>
-              </>
-            }
-          ></DeployButton>
-        </Form>
-      </Col>
-      <Col className="m-0 p-0">
-        {!pkh ? (
-          <DeployButton
-            className="mt-5"
-            onClick={() => connect(DEFAULT_NETWORK).catch(console.log)}
-            text={
-              <>
-                <div className="d-btn-h1-text">Connect</div>
-                <div className="d-btn-h2-text">Your Wallet</div>
-              </>
-            }
-          ></DeployButton>
-        ) : (
-          <>
-            <div>
-              <DeployButton
-                className="mt-5"
-                onClick={() => connect(NETWORKS[network.nextNetworkIndex])}
-                text={
-                  <>
-                    <div className="d-btn-h1-text">{network.name}</div>
-                    <div className="d-btn-h2-text">network</div>
-                  </>
-                }
-              ></DeployButton>
-            </div>
-            <div>
-              <DeployButton
-                onClick={() => {}}
-                text={
-                  <>
-                    <div className="d-btn-h1-text">
-                      {pkh.slice(0, 7) + "..."}
-                    </div>
-                    <div className="d-btn-h2-text">address</div>
-                  </>
-                }
-              ></DeployButton>
-            </div>
-            <div>
-              <DeployButton
-                onClick={disconnect}
-                text={
-                  <>
-                    <div className="d-btn-h1-text">Disconnect</div>
-                    <div className="d-btn-h2-text">from Wallet</div>
-                  </>
-                }
-              ></DeployButton>
-            </div>
-          </>
-        )}
-      </Col>
-    </Row>
+              <FormField
+                label="Symbol"
+                onChange={(e) => {
+                  tokens[index].symbol = e.target.value;
+                  setTokens(JSON.stringify(tokens));
+                }}
+              ></FormField>
+            </HorizontalStack>
+            <HorizontalStack>
+              <FormField
+                label="Supply"
+                type="number"
+                onChange={(e) => {
+                  tokens[index].supply = e.target.value;
+                  setTokens(JSON.stringify(tokens));
+                }}
+              ></FormField>
+              <FormField
+                label="Decimals"
+                type="number"
+                onChange={(e) => {
+                  tokens[index].decimals = e.target.value;
+                  setTokens(JSON.stringify(tokens));
+                }}
+              ></FormField>
+            </HorizontalStack>
+            <FormField
+              label="Icon"
+              type="text"
+              onChange={(e) => {
+                tokens[index].icon = e.target.value;
+                setTokens(JSON.stringify(tokens));
+              }}
+            ></FormField>
+            <FormField
+              label="Description"
+              multiline="true"
+              maxRows="4"
+              minRows="4"
+              onChange={(e) => {
+                tokens[index].description = e.target.value;
+                setTokens(JSON.stringify(tokens));
+              }}
+            ></FormField>
+          </React.Fragment>
+        ))}
+        <MainButton
+          type="submit"
+          colorType="type2"
+          text="Deploy"
+          onClick={handleClick}
+          disabled={!pkh}
+        ></MainButton>
+      </Stack>
+    </Paper>
   );
 };
 

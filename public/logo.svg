@@ -1,0 +1,6 @@
+<svg id="Component_3_1" data-name="Component 3 – 1" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
+  <g id="Component_1_1" data-name="Component 1 – 1">
+    <path id="Path_1" data-name="Path 1" d="M25,0A25,25,0,1,1,0,25,25,25,0,0,1,25,0Z" fill="#5226bf"/>
+  </g>
+  <text id="FA2" transform="translate(8 33)" fill="#fff" font-size="20" font-family="HelveticaNeue, Helvetica Neue"><tspan x="0" y="0">FA2</tspan></text>
+</svg>

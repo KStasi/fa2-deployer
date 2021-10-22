@@ -1,28 +1,47 @@
 import React from "react";
 
-import "./FormField.css";
-import Form from "react-bootstrap/Form";
+import { TextField } from "@material-ui/core";
+import { styled } from "@mui/material/styles";
+
+const MainInput = styled(TextField)(({ theme }) => ({
+  "& .MuiInputLabel-root": {
+    ...theme.custom.inputFont,
+  },
+  "& .MuiInputBase-input": {
+    ...theme.custom.inputFont,
+    "&:focus": {
+      ...theme.custom.inputFont,
+    },
+  },
+}));
 
 const FormField = ({
-  placeholder,
+  label,
   onChange,
   type,
+  multiline,
   defaultValue,
   notRequired,
+  maxRows,
+  minRows,
 }) => {
   type = type || "text";
   return (
-    <>
-      <Form.Control
-        size="lg"
-        required={!notRequired}
-        type={type}
-        defaultValue={defaultValue ? defaultValue : ""}
-        placeholder={placeholder}
-        className="input-text my-2"
-        onChange={onChange}
-      />
-    </>
+    <MainInput
+      id={label}
+      label={label}
+      variant="outlined"
+      required={!notRequired}
+      type={type}
+      multiline={multiline}
+      maxRows={maxRows}
+      minRows={minRows}
+      defaultValue={defaultValue ? defaultValue : ""}
+      onChange={onChange}
+      autoFocus
+      size="small"
+      sx={{ width: "100%" }}
+    />
   );
 };
 

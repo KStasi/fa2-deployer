@@ -1,0 +1,30 @@
+[
+  {
+    "topic": "What is FA2?",
+    "description": "It is a token standard on Tezos that supports a wide range of token types. FA2 serves as single- and multi-token smart contracts for a variety of tokens, it can contain both fungible or non-fungible assets."
+  },
+  {
+    "topic": "What does admin control?",
+    "description": "Admin can update the admin, pause transfers and token approves, create, mint and burn tokens."
+  },
+  {
+    "topic": "What is the difference between Basic and Granular token?",
+    "description": "In the Basic version admin can only pause transfers and approves of all tokens; in case of Granular version any asset can be paused/unpaused separately."
+  },
+  {
+    "topic": "Can I create the token without admin?",
+    "description": "You can make the admin functions unreachable by setting zero address(ex. tz1ZZZZZZZZZZZZZZZZZZZZZZZZZZZZNkiRg) as an admin."
+  },
+  {
+    "topic": "Is the project open-sourced?",
+    "description": "Sure, the source code of smart contracts can be found here: https://github.com/oxheadalpha/smart-contracts.\n The frontend is located here: https://github.com/KStasi/fa2-deployer."
+  },
+  {
+    "topic": "What if I don't have the link to image?",
+    "description": "Sad enough. Try to upload it to some storage services or IPFS. In case of IPFS, remember that if your image isn't requested regularly or the nodes decide not to store it, the image might be lost and you will have to upload it again."
+  },
+  {
+    "topic": "Can the metadata be updated?",
+    "description": "No. That's it."
+  }
+]
