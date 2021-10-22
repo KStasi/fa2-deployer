@@ -48,7 +48,6 @@ const handleDeploy = async (
     };
     tokens.forEach((token, index) => {
       const tokenSupply = token.supply * new BigNumber(10).pow(token.decimals);
-      if (type != "Basic") storage.admin.paused.set(index, false);
       storage.assets.token_total_supply.set(index, tokenSupply);
       storage.assets.ledger.set([admin, index], tokenSupply);
       storage.assets.token_metadata.set(index, {
