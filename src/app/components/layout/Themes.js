@@ -13,13 +13,13 @@ export const defaultTheme = createTheme({
         secondary: "#8255F2",
       },
       type3: {
-        secondary: "#3655B3",
         default: "#223773",
+        secondary: "#3655B3",
       },
       background: "#f2f4f3",
+      font: "#FAFAFA",
     },
     mainFont: {
-      color: "#FAFAFA",
       font: "normal normal bold 16px/22px Open Sans",
       "letter-spacing": "-0.16px",
       "text-transform": "none",

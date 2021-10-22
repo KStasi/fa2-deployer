@@ -7,7 +7,11 @@ function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
       {"Made with 💙 by "}
-      <Link color="inherit" href="https://www.linkedin.com/in/kstasi/">
+      <Link
+        color="inherit"
+        href="https://www.linkedin.com/in/kstasi/"
+        target="_blank"
+      >
         KStasi
       </Link>
     </Typography>
@@ -22,18 +26,24 @@ function Reference({ title, link }) {
       color="text.secondary"
       component="p"
     >
-      <Link color="inherit" href={link}>
+      <Link color="inherit" href={link} target="_blank">
         {title}
       </Link>
     </Typography>
   );
 }
-function Footer({ description, title }) {
+function Footer() {
   return (
-    <Box component="footer" sx={{ py: 6 }}>
+    <Box component="footer" sx={{ py: 5 }}>
       <Container maxWidth="lg">
-        <Reference title="Smart Contracts" link=""></Reference>
-        <Reference title="Frontend" link=""></Reference>
+        <Reference
+          title="Smart Contracts"
+          link="https://github.com/oxheadalpha/smart-contracts"
+        ></Reference>
+        <Reference
+          title="Frontend"
+          link="https://github.com/KStasi/fa2-deployer"
+        ></Reference>
         <Copyright />
       </Container>
     </Box>

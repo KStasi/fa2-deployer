@@ -1,20 +1,8 @@
-import React, { useCallback, useState, Fragment } from "react";
+import React from "react";
 import FormField from "../atoms/FormField";
-import "./FormBox.css";
-import useBeacon from "../hooks/useBeacon";
-import handleDeploy from "../hooks/handleDeploy";
-import { DEFAULT_NETWORK, NETWORKS } from "../../defaults";
-// import http from "http";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import MainButton from "../atoms/MainButton";
-import MainSelect from "../atoms/MainSelect";
 import HorizontalStack from "../atoms/HorizontalStack";
-import Stack from "@mui/material/Stack";
-
-const checkURL = (url) => {
-  return url && url.match(/\.(jpeg|jpg|gif|png)$/) != null;
-};
 
 const AssetsGroup = ({ tokens, setTokens, handleRemove }) => {
   return (

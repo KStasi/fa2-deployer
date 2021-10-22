@@ -3,6 +3,7 @@ import React from "react";
 import { UseBeaconProvider, useBeacon } from "./hooks/useBeacon";
 import FormBox from "./layout/FormBox";
 import Footer from "./layout/Footer";
+import Faq from "./layout/Faq";
 import ButtonGroup from "./layout/ButtonGroup";
 import { defaultTheme } from "./layout/Themes";
 import RiskAlert from "./atoms/RiskAlert";
@@ -36,6 +37,7 @@ const App = () => {
               <Grid item xs={12} md={6} lg={6}>
                 <RiskAlert></RiskAlert>
                 <FormBox></FormBox>
+                <Faq></Faq>
               </Grid>
               <Grid item xs={12} md={3} lg={3}>
                 <ButtonGroup></ButtonGroup>

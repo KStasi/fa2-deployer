@@ -13,14 +13,14 @@ const MainInput = styled(InputBase)(({ theme, colorType }) => ({
   ...theme.custom.secondaryFont,
   background: `${theme.custom.color[colorType].default} 0% 0% no-repeat padding-box`,
   ...theme.custom.box,
-  "&:hover": {
-    "background-color": theme.custom.color[colorType].secondary,
-  },
   "& .MuiInputBase-input": {
     ...theme.custom.secondaryFont,
-    padding: "0 30px",
+    "padding-left": "30px",
     background: `${theme.custom.color[colorType].default} 0% 0% no-repeat padding-box`,
     "&:hover": {
+      "background-color": theme.custom.color[colorType].secondary,
+    },
+    "&:focus": {
       "background-color": theme.custom.color[colorType].secondary,
     },
   },

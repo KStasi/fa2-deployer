@@ -1,8 +1,7 @@
-<svg id="Component_2_1" data-name="Component 2 – 1" xmlns="http://www.w3.org/2000/svg" width="247" height="50" viewBox="0 0 247 50">
-  <text id="Typography_TAG:H4_" data-name="Typography [TAG:H4]" transform="translate(61 36)" fill="#343bbf" font-size="35" font-family="ProximaNova-Bold, Proxima Nova" font-weight="700" letter-spacing="0.008em"><tspan x="0" y="0">FA2 Bakery</tspan></text>
+<svg id="Component_2_1" data-name="Component 2 – 1" xmlns="http://www.w3.org/2000/svg" width="164" height="50" viewBox="0 0 164 50">
   <g id="Component_1_1" data-name="Component 1 – 1">
-    <circle id="Ellipse_1" data-name="Ellipse 1" cx="25" cy="25" r="25" transform="translate(5)" fill="#343bbf"/>
-    <rect id="Rectangle_1" data-name="Rectangle 1" width="30" height="30" fill="#ff665a"/>
-    <path id="Polygon_1" data-name="Polygon 1" d="M15,0l3.3,17.8L30,30,15,24.4,0,30,11.7,17.8Z" transform="translate(15 10)" fill="#fff"/>
+    <path id="Path_1" data-name="Path 1" d="M25,0A25,25,0,1,1,0,25,25,25,0,0,1,25,0Z" fill="#5226bf"/>
   </g>
+  <text id="Typography_TAG:H4_" data-name="Typography [TAG:H4]" transform="translate(52 37)" fill="#223773" font-size="35" font-family="ProximaNova-Bold, Proxima Nova" font-weight="700" letter-spacing="0.008em"><tspan x="0" y="0">Bakery</tspan></text>
+  <text id="FA2" transform="translate(8 33)" fill="#fff" font-size="20" font-family="HelveticaNeue, Helvetica Neue"><tspan x="0" y="0">FA2</tspan></text>
 </svg>

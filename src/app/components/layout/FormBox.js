@@ -8,7 +8,6 @@ import { DEFAULT_NETWORK, NETWORKS } from "../../defaults";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import MainButton from "../atoms/MainButton";
-import AssetsGroup from "./AssetsGroup";
 import MainSelect from "../atoms/MainSelect";
 import HorizontalStack from "../atoms/HorizontalStack";
 import Stack from "@mui/material/Stack";
