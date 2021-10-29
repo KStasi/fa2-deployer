@@ -123,7 +123,7 @@ const FormBox = () => {
               <Box
                 sx={{
                   width: 200,
-                  font: "normal normal bold 16px/22px Open Sans",
+                  font: "normal normal bold 16px/22px Roboto",
                 }}
               >
                 Asset {index}
