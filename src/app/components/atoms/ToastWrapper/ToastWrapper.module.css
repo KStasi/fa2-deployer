@@ -1,0 +1,44 @@
+.notificationContainer {
+    position: fixed;
+    left: calc(50% - 200px);
+    width: 400px;
+    min-width: 400px;
+    transform: none;
+    padding: 0;
+    top: 88px;
+}
+
+.notification {
+  margin-bottom: 24px;
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  padding: 8px;
+  box-shadow: 0px 10px 24px rgba(0, 0, 0, 0.1);
+  border-radius: 8px
+}
+
+.toastBody {
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  line-height: 1.72;
+}
+
+.icon {
+  position: absolute;
+  top: 22px;
+  display: flex;
+  align-items: center;
+  left: 16px;
+}
+
+.closeButton {
+  position: absolute;
+  top: 22px;
+  display: flex;
+  align-items: center;
+  right: 16px;
+}

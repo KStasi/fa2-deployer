@@ -8,6 +8,7 @@ import MainButton from "../atoms/MainButton";
 import MainSelect from "../atoms/MainSelect";
 import HorizontalStack from "../atoms/HorizontalStack";
 import Stack from "@mui/material/Stack";
+import useUpdateToast from '../hooks/useUpdateHooks';
 
 const validateInput = (
   admin,
@@ -39,20 +40,34 @@ const FormBox = () => {
   const [contractDescription, setContractDescription] = useState("");
   const [tokenType, setTokenType] = useState("Basic");
   const [, setFetching] = useState(false);
+  const updateToast = useUpdateToast();
 
   const handleClick = useCallback(async () => {
     if (validateInput(admin, contractName, contractDescription, tokens)) {
-      await handleDeploy(
-        admin,
-        contractName,
-        contractDescription,
-        tokensString,
-        tokenType,
-        Tezos.wallet,
-        setFetching
-      );
+      try {
+        await handleDeploy(
+          admin,
+          contractName,
+          contractDescription,
+          tokensString,
+          tokenType,
+          Tezos.wallet,
+          setFetching
+        );
+        updateToast({
+                
+          type: 'success',
+          render: `Successfully deployed!`,
+        });
+      } catch(err) {
+        updateToast({
+          type: 'error',
+          render: `${err.name}: ${err.message}`,
+        })
+      } 
     }
   }, [
+    updateToast,
     setFetching,
     Tezos.wallet,
     tokensString,

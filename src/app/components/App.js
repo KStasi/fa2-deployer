@@ -13,11 +13,13 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import logo from "./assets/Logo.svg";
+import { ToastWrapper } from './atoms/ToastWrapper/ToastWrapper';
 
 const App = () => {
   return (
     <UseBeaconProvider>
       <ThemeProvider theme={defaultTheme}>
+      <ToastWrapper />
         <Box
           component="main"
           sx={{
