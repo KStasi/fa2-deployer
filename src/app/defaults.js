@@ -9,8 +9,15 @@ export const NETWORKS = [
     rpcBaseURL: "https://mainnet.smartpy.io",
   },
   {
-    id: NetworkType.GRANADANET,
+    id: NetworkType.HANGZHOUNET,
     nextNetworkIndex: 2,
+    name: "Hangzhou",
+    type: "test",
+    rpcBaseURL: "https://hangzhounet.smartpy.io/",
+  },
+  {
+    id: NetworkType.GRANADANET,
+    nextNetworkIndex: 3,
     name: "Granadanet",
     type: "test",
     rpcBaseURL: "https://granadanet.smartpy.io/",
