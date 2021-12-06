@@ -20,20 +20,20 @@ export const defaultTheme = createTheme({
       font: "#FAFAFA",
     },
     mainFont: {
-      font: "normal normal bold 16px/22px Open Sans",
+      font: "normal normal bold 16px/22px Roboto",
       "letter-spacing": "-0.16px",
       "text-transform": "none",
       "text-align": "center",
     },
     secondaryFont: {
       color: "#FAFAFA",
-      font: "normal normal normal 16px/22px Open Sans",
+      font: "normal normal normal 16px/22px Roboto",
       "letter-spacing": "-0.16px",
       "text-transform": "none",
       "text-align": "center",
     },
     inputFont: {
-      font: "normal normal normal 14px/18px Open Sans",
+      font: "normal normal normal 14px/18px Roboto",
       "letter-spacing": "-0.16px",
       "text-transform": "none",
       "text-align": "left",

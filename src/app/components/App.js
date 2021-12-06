@@ -23,8 +23,7 @@ const App = () => {
           sx={{
             backgroundColor: "#f2f4f3",
             flexGrow: 1,
-            height: "100vh",
-            overflow: "auto",
+            minHeight: "100vh",
             display: "flex",
           }}
         >
@@ -34,15 +33,15 @@ const App = () => {
                 <img src={logo} alt={"logo"} />
               </Grid>
               <Grid item xs={12} md={6} lg={6}>
-                <RiskAlert></RiskAlert>
-                <FormBox></FormBox>
-                <Faq></Faq>
+                <RiskAlert />
+                <FormBox />
+                <Faq />
               </Grid>
               <Grid item xs={12} md={3} lg={3}>
-                <ButtonGroup></ButtonGroup>
+                <ButtonGroup />
               </Grid>
             </Grid>
-            <Footer></Footer>
+            <Footer />
           </Container>
         </Box>
       </ThemeProvider>
