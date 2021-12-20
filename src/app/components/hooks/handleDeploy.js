@@ -71,6 +71,7 @@ const handleDeploy = async (
       .send();
   } catch (e) {
     console.error(e);
+    throw new Error(e.message)
   } finally {
     setFetching(false);
   }
