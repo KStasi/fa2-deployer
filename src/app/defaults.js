@@ -13,7 +13,7 @@ export const NETWORKS = [
     nextNetworkIndex: 2,
     name: "Ithacanet",
     type: "test",
-    rpcBaseURL: "https://ithacanet.smartpy.io",
+    rpcBaseURL: "https://ithacanet.ecadinfra.com",
   },
   {
     id: NetworkType.HANGZHOUNET,
