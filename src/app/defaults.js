@@ -11,7 +11,7 @@ export const NETWORKS = [
   {
     id: NetworkType.JAKARTANET,
     nextNetworkIndex: 2,
-    name: "Jakarta Testnet",
+    name: "Jakarta",
     type: "test",
     rpcBaseURL: "https://jakartanet.tezos.marigold.dev",
   },
