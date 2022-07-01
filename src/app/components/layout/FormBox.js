@@ -17,13 +17,13 @@ const validateInput = (
 ) => {
   if (
     [admin, contractName, contractDescription].some(
-      (str) => !str || str.trim() == ""
+      (str) => !str || str.trim() === ""
     )
   )
     return false;
   if (
     tokensString.some((token) => {
-      return Object.values(token).some((str) => !str || str.trim() == "");
+      return Object.values(token).some((str) => !str || str.trim() === "");
     })
   )
     return false;
@@ -86,7 +86,7 @@ const FormBox = () => {
         ></FormField>
         <FormField
           label="Contract description"
-          multiline="true"
+          multiline
           onChange={(e) => setContractDescription(e.target.value)}
           maxRows="4"
           minRows="4"
@@ -181,7 +181,7 @@ const FormBox = () => {
             ></FormField>
             <FormField
               label="Description"
-              multiline="true"
+              multiline
               maxRows="4"
               minRows="4"
               onChange={(e) => {

@@ -36,7 +36,7 @@ const handleDeploy = async (
       admin: {
         admin: admin,
         pending_admin: null,
-        paused: type == "Basic" ? false : MichelsonMap.fromLiteral({}),
+        paused: type === "Basic" ? false : MichelsonMap.fromLiteral({}),
       },
       assets: {
         token_total_supply: MichelsonMap.fromLiteral({}),
@@ -65,7 +65,7 @@ const handleDeploy = async (
     console.log(fa2MultiAsset);
     await wallet
       .originate({
-        code: type == "Basic" ? fa2MultiAsset : fa2GranularMultiAsset,
+        code: type === "Basic" ? fa2MultiAsset : fa2GranularMultiAsset,
         storage,
       })
       .send();

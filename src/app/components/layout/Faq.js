@@ -14,15 +14,14 @@ function Faq() {
       <MainTypography variant="h4" align="center" sx={{ py: 2 }}>
         FAQ
       </MainTypography>
-      {faqs.map((item, index) => {
-        return (
-          <FaqItem
-            id={"faq" + index}
-            topic={item.topic}
-            description={item.description}
-          />
-        );
-      })}
+      {faqs.map((item, index) =>
+        <FaqItem
+          id={"faq" + index}
+          key={"faq" + index}
+          topic={item.topic}
+          description={item.description}
+        />
+      )}
     </Box>
   );
 }

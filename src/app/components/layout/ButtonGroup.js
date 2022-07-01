@@ -22,7 +22,7 @@ const ButtonGroup = () => {
         <>
           <MainButton
             text={pkh.slice(0, 6) + "..." + pkh.slice(-6)}
-            onClick={() => {}}
+            onClick={() => { }}
           ></MainButton>
           <MainButton
             text="Disconnect"
@@ -36,7 +36,7 @@ const ButtonGroup = () => {
         items={NETWORKS.map((item) => item.name)}
         onChange={(e) => {
           setNetwork(
-            NETWORKS.find((element) => element.name == e.target.value)
+            NETWORKS.find((element) => element.name === e.target.value)
           );
           console.log(e.target.value);
           disconnect().catch(console.log);
