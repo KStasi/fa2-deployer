@@ -5,6 +5,7 @@ import { BeaconWallet } from "@taquito/beacon-wallet";
 import { TezosToolkit } from "@taquito/taquito";
 
 import { DEFAULT_NETWORK } from "../../defaults";
+import { NetworkType } from "@airgap/beacon-sdk";
 
 class LambdaViewSigner {
   async publicKeyHash() {
@@ -41,9 +42,19 @@ export const [UseBeaconProvider, useBeacon] = constate(() => {
   const connect = useCallback(async (currentNetwork) => {
     await wallet.disconnect();
     await wallet.clearActiveAccount();
-    await wallet.requestPermissions({
-      network: { type: currentNetwork.id },
-    });
+    if (currentNetwork.id === NetworkType.CUSTOM) {
+      await wallet.requestPermissions({
+        network: {
+          type: currentNetwork.id,
+          name: "Flextesa",
+          rpcUrl: "http://127.0.0.1:20000",
+        },
+      });
+    } else {
+      await wallet.requestPermissions({
+        network: { type: currentNetwork.id },
+      });
+    }
     Tezos.setWalletProvider(wallet);
     Tezos.setRpcProvider(currentNetwork.rpcBaseURL);
     const activeAcc = await wallet.client.getActiveAccount();
