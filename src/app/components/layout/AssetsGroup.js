@@ -67,7 +67,7 @@ const AssetsGroup = ({ tokens, setTokens, handleRemove }) => {
           ></FormField>
           <FormField
             label="Description"
-            multiline="true"
+            multiline
             maxRows="4"
             minRows="4"
             onChange={(e) => {

@@ -6,7 +6,7 @@ export const NETWORKS = [
     nextNetworkIndex: 1,
     name: "Mainnet",
     type: "main",
-    rpcBaseURL: "https://mainnet.smartpy.io",
+    rpcBaseURL: "https://mainnet.smartpy.io/",
   },
   {
     id: NetworkType.GHOSTNET,
@@ -20,14 +20,21 @@ export const NETWORKS = [
     nextNetworkIndex: 3,
     name: "Jakarta",
     type: "test",
-    rpcBaseURL: "https://jakartanet.tezos.marigold.dev",
+    rpcBaseURL: "https://jakartanet.tezos.marigold.dev/",
+  },
+  {
+    id: NetworkType.GHOSTNET,
+    nextNetworkIndex: 4,
+    name: "Ghostnet",
+    type: "test",
+    rpcBaseURL: "https://rpc.ghostnet.teztnets.xyz/",
   },
   {
     id: NetworkType.ITHACANET,
     nextNetworkIndex: 4,
     name: "Ithacanet",
     type: "test",
-    rpcBaseURL: "https://ithacanet.ecadinfra.com",
+    rpcBaseURL: "https://ithacanet.ecadinfra.com/",
   },
   {
     id: NetworkType.HANGZHOUNET,

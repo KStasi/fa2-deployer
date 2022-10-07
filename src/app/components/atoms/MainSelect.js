@@ -10,13 +10,13 @@ const MainInput = styled(InputBase)(({ theme, colorType }) => ({
   ...theme.custom.box,
   "& .MuiInputBase-input": {
     ...theme.custom.secondaryFont,
-    "padding-left": "30px",
+    "paddingLeft": "30px",
     background: `${theme.custom.color[colorType].default} 0% 0% no-repeat padding-box`,
     "&:hover": {
-      "background-color": theme.custom.color[colorType].secondary,
+      "backgroundColor": theme.custom.color[colorType].secondary,
     },
     "&:focus": {
-      "background-color": theme.custom.color[colorType].secondary,
+      "backgroundColor": theme.custom.color[colorType].secondary,
     },
   },
   "& .MuiSvgIcon-root": {
@@ -44,7 +44,7 @@ const MainSelect = ({ onChange, defaultValue, text, items, colorType }) => {
       input={<MainInput />}
     >
       {items.map((item) => {
-        return <StyledItem value={item}>{item}</StyledItem>;
+        return <StyledItem key={item} value={item}>{item}</StyledItem>;
       })}
     </Select>
   );
